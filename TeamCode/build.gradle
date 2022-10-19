@@ -11,7 +11,7 @@
 
 // Custom definitions may go here
 
-// Include common definitions from above.
+// Include common definitions from above./
 apply from: '../build.common.gradle'
 apply from: '../build.dependencies.gradle'
 
@@ -31,4 +31,6 @@ android {
 dependencies {
     implementation project(':FtcRobotController')
     annotationProcessor files('lib/OpModeAnnotationProcessor.jar')
+    implementation 'org.openftc:easyopencv:1.5.2'
+    implementation 'org.openftc:apriltag:1.1.0'
 }
