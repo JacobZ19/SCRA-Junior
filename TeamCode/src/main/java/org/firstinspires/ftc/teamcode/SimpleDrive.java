@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.Range;
 
@@ -69,6 +68,15 @@ public class SimpleDrive extends OpMode {
             rightBackPower = -0.5;
         }
 
+        //using for button
+        if (gamepad1.right_bumper)
+        {
+             leftFrontPower /= 3;
+             leftBackPower /= 3;
+             rightFrontPower /= 3;
+             rightBackPower /= 3;
+        }
+
         leftFrontDrive.setPower((leftFrontPower));
         rightFrontDrive.setPower((rightFrontPower));
         leftBackDrive.setPower((leftBackPower));
@@ -80,7 +88,7 @@ public class SimpleDrive extends OpMode {
 //            motor.setpower(1);
 //        }
 
-}
+    }
 
     @Override
     public void stop()
@@ -91,5 +99,5 @@ public class SimpleDrive extends OpMode {
         rightBackDrive.setPower(0);
     }
 
-    }
+}
 

@@ -92,10 +92,10 @@ public class RobotAutoDriveByEncoder_Linear extends LinearOpMode {
     public void runOpMode() {
 
         // Initialize the drive system variables.
-        leftFrontDrive = hardwareMap.get(DcMotor.class, "left_drive_Front");
-        rightFrontDrive = hardwareMap.get(DcMotor.class, "right_drive_Front");
-        leftBackDrive  = hardwareMap.get(DcMotor.class, "left_drive_Back");
-        rightBackDrive = hardwareMap.get(DcMotor.class, "right_drive_Back");
+        leftFrontDrive = hardwareMap.get(DcMotor.class, "left_front");
+        rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front");
+        leftBackDrive = hardwareMap.get(DcMotor.class, "left_back");
+        rightBackDrive = hardwareMap.get(DcMotor.class, "right_back");
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // When run, this OpMode should start both motors driving forward. So adjust these two lines based on your first test drive.

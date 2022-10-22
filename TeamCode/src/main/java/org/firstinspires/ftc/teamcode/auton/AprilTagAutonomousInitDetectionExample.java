@@ -38,8 +38,11 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
 {
     OpenCvCamera camera;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
+    AutoDrive autoDrive;
 
     static final double FEET_PER_METER = 3.28084;
+
+
 
     // Lens intrinsics
     // UNITS ARE PIXELS
@@ -59,6 +62,8 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
     int RIGHT = 3;
 
     AprilTagDetection tagOfInterest = null;
+    AutoDrive robot = new AutoDrive();
+
 
     @Override
     public void runOpMode()
@@ -197,5 +202,8 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
     }
     public int gettag_number(){
         return tag_number;
+    }
+    {
+        autoDrive.drive(1000, 1, autoDrive.STRAFELEFT);
     }
 }
