@@ -53,15 +53,19 @@ public class SimpleDrive extends OpMode {
         leftBackPower = Range.clip(drive + turn - strafe, -1, 1);
         rightBackPower = Range.clip(drive - turn + strafe, -1, 1);
 
-
-        if(gamepad1.right_stick_x >= 0.1 && gamepad1.left_stick_y <= -0.1){
+        telemetry.addData("left stick X position", gamepad1.left_stick_x);
+        telemetry.addData("left front power", leftFrontPower);
+        telemetry.addData("This is before the move loop", "It sets x+y by the movement of the joysticks");
+        telemetry.log().add("hello");
+        telemetry.update();
+        if(gamepad1.left_stick_y >= 0.1 && gamepad1.right_stick_x <= -0.1){
             rightFrontPower = 0.5;
             rightBackPower = 0.5;
             leftFrontPower = -0.5;
             leftBackPower = -0.5;
         }
 
-        else if(gamepad1.right_stick_x <= -0.1 && gamepad1.left_stick_y <= -0.1){
+        else if(gamepad1.left_stick_y <= -0.1 && gamepad1.right_stick_x <= -0.1){
             leftFrontPower = 0.5;
             leftBackPower = 0.5;
             rightFrontPower = -0.5;
@@ -71,10 +75,10 @@ public class SimpleDrive extends OpMode {
         //using for button
         if (gamepad1.right_bumper)
         {
-             leftFrontPower /= 3;
-             leftBackPower /= 3;
-             rightFrontPower /= 3;
-             rightBackPower /= 3;
+            leftFrontPower /= 3;
+            leftBackPower /= 3;
+            rightFrontPower /= 3;
+            rightBackPower /= 3;
         }
 
         leftFrontDrive.setPower((leftFrontPower));
@@ -100,4 +104,3 @@ public class SimpleDrive extends OpMode {
     }
 
 }
-

@@ -6,7 +6,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 @Autonomous
-public class AutoDrive extends LinearOpMode {
+public class AutoDrive {
+
+    LinearOpMode opmode = null;
     public final int FORWARD = 1;
     public final int BACKWARD = 2;
     public final int STRAFELEFT = 3;
@@ -15,11 +17,13 @@ public class AutoDrive extends LinearOpMode {
     private DcMotor rightFrontDrive = null;
     private DcMotor leftBackDrive = null;
     private DcMotor rightBackDrive = null;
-    public void runOpMode(){
-        leftFrontDrive = hardwareMap.get(DcMotor.class, "left_front");
-        rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front");
-        leftBackDrive = hardwareMap.get(DcMotor.class, "left_back");
-        rightBackDrive = hardwareMap.get(DcMotor.class, "right_back");
+
+    public void initHardwareMap()
+    {
+        leftFrontDrive = opmode.hardwareMap.get(DcMotor.class, "left_front");
+        rightFrontDrive = opmode.hardwareMap.get(DcMotor.class, "right_front");
+        leftBackDrive = opmode.hardwareMap.get(DcMotor.class, "left_back");
+        rightBackDrive = opmode.hardwareMap.get(DcMotor.class, "right_back");
 
         leftFrontDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         rightFrontDrive.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -37,9 +41,10 @@ public class AutoDrive extends LinearOpMode {
         rightBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
 
-        drive(1000, 2,STRAFELEFT);
 
     }
+
+
 
     public void drive(int time,double power,int direction){
         if (direction == FORWARD) {
@@ -47,7 +52,7 @@ public class AutoDrive extends LinearOpMode {
             leftBackDrive.setPower(power);
             rightFrontDrive.setPower(power);
             rightBackDrive.setPower(power);
-            sleep(time);
+            opmode.sleep(time);
         }
 
         else if (direction == BACKWARD) {
@@ -55,7 +60,7 @@ public class AutoDrive extends LinearOpMode {
             leftBackDrive.setPower(power * -1);
             rightFrontDrive.setPower(power * -1);
             rightBackDrive.setPower(power * -1);
-            sleep(time);
+            opmode.sleep(time);
         }
 
         else if (direction == STRAFELEFT) {
@@ -63,7 +68,7 @@ public class AutoDrive extends LinearOpMode {
             leftBackDrive.setPower(power * -1);
             rightFrontDrive.setPower(power * -1);
             rightBackDrive.setPower(power * 1);
-            sleep(time);
+            opmode.sleep(time);
         }
 
         else if (direction == STRAFERIGHT) {
@@ -71,7 +76,7 @@ public class AutoDrive extends LinearOpMode {
             leftBackDrive.setPower(power * 1);
             rightFrontDrive.setPower(power * 1);
             rightBackDrive.setPower(power * -1);
-            sleep(time);
+            opmode.sleep(time);
         }
     }
 
