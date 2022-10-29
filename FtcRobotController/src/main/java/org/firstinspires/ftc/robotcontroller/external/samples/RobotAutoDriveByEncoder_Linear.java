@@ -46,7 +46,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  *  This code ALSO requires that the drive Motors have been configured such that a positive
  *  power command moves them forward, and causes the encoders to count UP.
  *
- *   The desired path in this example is:
+
  *   - Drive forward for 48 inches
  *   - Spin right for 12 Inches
  *   - Drive Backward for 24 inches

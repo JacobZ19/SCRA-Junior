@@ -38,7 +38,7 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
 {
     OpenCvCamera camera;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
-    AutoDrive autoDrive;
+
 
     static final double FEET_PER_METER = 3.28084;
 
@@ -176,15 +176,19 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
         if(tagOfInterest == null || tagOfInterest.id == LEFT){
             //TRAJECTORY
             tag_number = 1;
-            robot.drive(1000, 1, autoDrive.STRAFELEFT);
+            robot.drive(600, 1, robot.STRAFELEFT);
+            robot.drive(600, 1, robot.FORWARD);
         }
         else if(tagOfInterest.id == MIDDLE){
             //TRAJECTORY
             tag_number = 2;
+            robot.drive(600, 1, robot.FORWARD);
         }
         else{
             //TRAJECTORY
             tag_number = 3;
+            robot.drive(600, 1, robot.STRAFERIGHT);
+            robot.drive(600, 1, robot.FORWARD);
         }
 
 

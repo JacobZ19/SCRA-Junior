@@ -18,10 +18,7 @@ public class AutoDrive {
     public final int BACKWARD = 2;
     public final int STRAFELEFT = 3;
     public final int STRAFERIGHT = 4;
-    public DcMotor leftFrontDrive = null;
-    public DcMotor rightFrontDrive = null;
-    public DcMotor leftBackDrive = null;
-    public DcMotor rightBackDrive = null;
+    DcMotor rightFrontDrive,rightBackDrive, leftFrontDrive, leftBackDrive;
 
     public void initHardwareMap()
     {
@@ -77,10 +74,10 @@ public class AutoDrive {
         }
 
         else if (direction == STRAFELEFT) {
-            leftFrontDrive.setPower(power * 1);
-            leftBackDrive.setPower(power * -1);
-            rightFrontDrive.setPower(power * -1);
-            rightBackDrive.setPower(power * 1);
+            leftFrontDrive.setPower(power * -1);
+            leftBackDrive.setPower(power * 1);
+            rightFrontDrive.setPower(power * 1);
+            rightBackDrive.setPower(power * -1);
             opMode.sleep(time);
             leftFrontDrive.setPower(0);
             leftBackDrive.setPower(0);
@@ -89,10 +86,12 @@ public class AutoDrive {
         }
 
         else if (direction == STRAFERIGHT) {
-            leftFrontDrive.setPower(power * -1);
-            leftBackDrive.setPower(power * 1);
-            rightFrontDrive.setPower(power * 1);
-            rightBackDrive.setPower(power * -1);
+
+
+            leftFrontDrive.setPower(power * 1);
+            leftBackDrive.setPower(power * -1);
+            rightFrontDrive.setPower(power * -1);
+            rightBackDrive.setPower(power * 1);
             opMode.sleep(time);
             leftFrontDrive.setPower(0);
             leftBackDrive.setPower(0);

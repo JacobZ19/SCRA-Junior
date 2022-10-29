@@ -56,7 +56,8 @@ public class SimpleDrive extends OpMode {
         telemetry.addData("left stick X position", gamepad1.left_stick_x);
         telemetry.addData("left front power", leftFrontPower);
         telemetry.addData("This is before the move loop", "It sets x+y by the movement of the joysticks");
-        telemetry.log().add("hello");
+        //telemetry.log().add("hello");
+
         telemetry.update();
         if(gamepad1.left_stick_y >= 0.1 && gamepad1.right_stick_x <= -0.1){
             rightFrontPower = 0.5;
