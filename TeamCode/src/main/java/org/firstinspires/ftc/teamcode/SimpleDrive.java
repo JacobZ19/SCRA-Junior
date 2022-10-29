@@ -11,12 +11,21 @@ import com.qualcomm.robotcore.util.Range;
 @TeleOp
 public class SimpleDrive extends OpMode {
 
+    double clawPos = ClawHome;
+    final double clawSpeed = 0.01;
     private DcMotor leftFrontDrive = null;
     private DcMotor rightFrontDrive = null;
     private DcMotor leftBackDrive = null;
     private DcMotor rightBackDrive = null;
     private DcMotor lift = null;
-//    private Servo Claw = null;
+    public Servo Claw = null;
+    public final static double ClawHome = 0.0;
+
+    public final static double ClawMinRange = 0.0;
+    public final static double ClawMaxRange = 1.0;
+
+    //servos
+
 
     @Override
     public void init()
@@ -25,8 +34,9 @@ public class SimpleDrive extends OpMode {
         rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front");
         leftBackDrive = hardwareMap.get(DcMotor.class, "left_back");
         rightBackDrive = hardwareMap.get(DcMotor.class, "right_back");
-        //Claw = hardwareMap.get(Servo.class,"Lift");
+        Claw = hardwareMap.servo.get("Arm");
         lift = hardwareMap.get(DcMotor.class,"Lift");
+        Claw.setPosition(ClawHome);
 
 
 
@@ -34,7 +44,7 @@ public class SimpleDrive extends OpMode {
         rightFrontDrive.setDirection(DcMotorSimple.Direction.FORWARD);
         leftBackDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         rightBackDrive.setDirection(DcMotorSimple.Direction.FORWARD);
-        //Claw.setDirection(Servo.Direction.FORWARD);
+        Claw.setDirection(Servo.Direction.FORWARD);
         lift.setDirection(DcMotorSimple.Direction.FORWARD);
 
     }
@@ -52,7 +62,7 @@ public class SimpleDrive extends OpMode {
         double rightFrontPower;
         double rightBackPower;
         double liftPower;
-        //double Clawpower;
+        double Clawpower;
 
 
         double drive = -gamepad1.left_stick_y;
@@ -106,15 +116,15 @@ public class SimpleDrive extends OpMode {
             liftPower = -0.5;
         }
 
-//        if (gamepad2.x)
-//        {
-//            Clawpower = 0.5;
-//        }
+        if (gamepad2.x)
 
-//        if (gamepad2.y)
-//        {
-//            Clawpower = -0.5;
-//        }
+            clawPos += clawSpeed;
+
+
+        if (gamepad2.y)
+        {
+           clawPos -= clawSpeed;
+        }
 
 
 
@@ -123,7 +133,9 @@ public class SimpleDrive extends OpMode {
         leftBackDrive.setPower((leftBackPower));
         rightBackDrive.setPower((rightBackPower));
         lift.setPower((liftPower));
-        //Claw.set = Clawpower;
+
+        clawPos = Range.clip(clawPos, ClawMinRange, ClawMaxRange);
+        Claw.setPosition(clawPos);
 
         //using for button
 
