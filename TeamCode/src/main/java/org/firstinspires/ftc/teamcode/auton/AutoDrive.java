@@ -4,26 +4,31 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Autonomous
 public class AutoDrive {
 
-    LinearOpMode opmode = null;
+    LinearOpMode opMode = null;
+    public ElapsedTime  runtime = new ElapsedTime();
+    public AutoDrive(LinearOpMode opMode){
+        this.opMode= opMode;
+    }
     public final int FORWARD = 1;
     public final int BACKWARD = 2;
     public final int STRAFELEFT = 3;
     public final int STRAFERIGHT = 4;
-    private DcMotor leftFrontDrive = null;
-    private DcMotor rightFrontDrive = null;
-    private DcMotor leftBackDrive = null;
-    private DcMotor rightBackDrive = null;
+    public DcMotor leftFrontDrive = null;
+    public DcMotor rightFrontDrive = null;
+    public DcMotor leftBackDrive = null;
+    public DcMotor rightBackDrive = null;
 
     public void initHardwareMap()
     {
-        leftFrontDrive = opmode.hardwareMap.get(DcMotor.class, "left_front");
-        rightFrontDrive = opmode.hardwareMap.get(DcMotor.class, "right_front");
-        leftBackDrive = opmode.hardwareMap.get(DcMotor.class, "left_back");
-        rightBackDrive = opmode.hardwareMap.get(DcMotor.class, "right_back");
+        leftFrontDrive = opMode.hardwareMap.get(DcMotor.class, "left_front");
+        rightFrontDrive = opMode.hardwareMap.get(DcMotor.class, "right_front");
+        leftBackDrive = opMode.hardwareMap.get(DcMotor.class, "left_back");
+        rightBackDrive = opMode.hardwareMap.get(DcMotor.class, "right_back");
 
         leftFrontDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         rightFrontDrive.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -52,7 +57,11 @@ public class AutoDrive {
             leftBackDrive.setPower(power);
             rightFrontDrive.setPower(power);
             rightBackDrive.setPower(power);
-            opmode.sleep(time);
+            opMode.sleep(time);
+            leftFrontDrive.setPower(0);
+            leftBackDrive.setPower(0);
+            rightFrontDrive.setPower(0);
+            rightBackDrive.setPower(0);
         }
 
         else if (direction == BACKWARD) {
@@ -60,7 +69,11 @@ public class AutoDrive {
             leftBackDrive.setPower(power * -1);
             rightFrontDrive.setPower(power * -1);
             rightBackDrive.setPower(power * -1);
-            opmode.sleep(time);
+            opMode.sleep(time);
+            leftFrontDrive.setPower(0);
+            leftBackDrive.setPower(0);
+            rightFrontDrive.setPower(0);
+            rightBackDrive.setPower(0);
         }
 
         else if (direction == STRAFELEFT) {
@@ -68,7 +81,11 @@ public class AutoDrive {
             leftBackDrive.setPower(power * -1);
             rightFrontDrive.setPower(power * -1);
             rightBackDrive.setPower(power * 1);
-            opmode.sleep(time);
+            opMode.sleep(time);
+            leftFrontDrive.setPower(0);
+            leftBackDrive.setPower(0);
+            rightFrontDrive.setPower(0);
+            rightBackDrive.setPower(0);
         }
 
         else if (direction == STRAFERIGHT) {
@@ -76,10 +93,12 @@ public class AutoDrive {
             leftBackDrive.setPower(power * 1);
             rightFrontDrive.setPower(power * 1);
             rightBackDrive.setPower(power * -1);
-            opmode.sleep(time);
+            opMode.sleep(time);
+            leftFrontDrive.setPower(0);
+            leftBackDrive.setPower(0);
+            rightFrontDrive.setPower(0);
+            rightBackDrive.setPower(0);
         }
     }
-
-
 
 }

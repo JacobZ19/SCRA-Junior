@@ -30,7 +30,7 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvInternalCamera;
-
+import org.firstinspires.ftc.teamcode.auton.AutoDrive;
 import java.util.ArrayList;
 
 @TeleOp
@@ -62,13 +62,13 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
     int RIGHT = 3;
 
     AprilTagDetection tagOfInterest = null;
-    //AutoDrive robot = new AutoDrive();
+    AutoDrive robot = new AutoDrive(this);
 
 
     @Override
     public void runOpMode()
     {
-        //robot.initHardwareMap();
+        robot.initHardwareMap();
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
         aprilTagDetectionPipeline = new AprilTagDetectionPipeline(tagsize, fx, fy, cx, cy);
@@ -176,6 +176,7 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
         if(tagOfInterest == null || tagOfInterest.id == LEFT){
             //TRAJECTORY
             tag_number = 1;
+            robot.drive(1000, 1, autoDrive.STRAFELEFT);
         }
         else if(tagOfInterest.id == MIDDLE){
             //TRAJECTORY
@@ -204,7 +205,5 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
     public int gettag_number(){
         return tag_number;
     }
-    {
-        //robot.drive(1000, 1, autoDrive.STRAFELEFT);
-    }
+
 }
