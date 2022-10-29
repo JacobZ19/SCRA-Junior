@@ -176,20 +176,28 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
         if(tagOfInterest == null || tagOfInterest.id == LEFT){
             //TRAJECTORY
             tag_number = 1;
-            robot.drive(600, 1, robot.STRAFELEFT);
+            robot.drive(620, 1, robot.STRAFELEFT);
             robot.drive(600, 1, robot.FORWARD);
         }
         else if(tagOfInterest.id == MIDDLE){
             //TRAJECTORY
             tag_number = 2;
+            robot.drive(50, 1, robot.STRAFELEFT);
+            robot.drive(400, 1, robot.FORWARD);
+        }
+        else if(tagOfInterest.id == RIGHT){
+            //TRAJECTORY
+            tag_number = 3;
+            robot.drive(300, 1, robot.STRAFERIGHT);
+
             robot.drive(400, 1, robot.FORWARD);
         }
         else{
-            //TRAJECTORY
-            tag_number = 3;
-            robot.drive(600, 1, robot.STRAFERIGHT);
-            robot.drive(400, 1, robot.FORWARD);
-        }
+            sleep(10000);
+            robot.drive(700, 1, robot.STRAFELEFT);
+
+
+    }
 
 
         /* You wouldn't have this in your autonomous, this is just to prevent the sample from ending */
