@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
+
 import com.qualcomm.robotcore.util.Range;
 
 @TeleOp
@@ -13,6 +15,8 @@ public class SimpleDrive extends OpMode {
     private DcMotor rightFrontDrive = null;
     private DcMotor leftBackDrive = null;
     private DcMotor rightBackDrive = null;
+    private DcMotor lift = null;
+//    private Servo Claw = null;
 
     @Override
     public void init()
@@ -21,6 +25,8 @@ public class SimpleDrive extends OpMode {
         rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front");
         leftBackDrive = hardwareMap.get(DcMotor.class, "left_back");
         rightBackDrive = hardwareMap.get(DcMotor.class, "right_back");
+        //Claw = hardwareMap.get(Servo.class,"Lift");
+        lift = hardwareMap.get(DcMotor.class,"Lift");
 
 
 
@@ -28,6 +34,9 @@ public class SimpleDrive extends OpMode {
         rightFrontDrive.setDirection(DcMotorSimple.Direction.FORWARD);
         leftBackDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         rightBackDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+        //Claw.setDirection(Servo.Direction.FORWARD);
+        lift.setDirection(DcMotorSimple.Direction.FORWARD);
+
     }
 
     @Override
@@ -42,16 +51,21 @@ public class SimpleDrive extends OpMode {
         double leftBackPower;
         double rightFrontPower;
         double rightBackPower;
+        double liftPower;
+        //double Clawpower;
 
 
         double drive = -gamepad1.left_stick_y;
         double strafe = gamepad1.left_stick_x;
         double turn = gamepad1.right_stick_x;
 
+
         leftFrontPower = Range.clip(drive+ turn + strafe, -0.5, 0.5);
         rightFrontPower = Range.clip(drive - turn - strafe, -0.5, 0.5);
         leftBackPower = Range.clip(drive + turn - strafe, -0.5, 0.5);
         rightBackPower = Range.clip(drive - turn + strafe, -0.5, 0.5);
+        liftPower = Range.clip(1, -0.5,0.5);
+        //Clawpower = Range.clip(1, -0.5,0.5);
 
         telemetry.addData("left stick X position", gamepad1.left_stick_x);
         telemetry.addData("left front power", leftFrontPower);
@@ -82,16 +96,37 @@ public class SimpleDrive extends OpMode {
             rightBackPower /= 3;
         }
 
+        if (gamepad2.a)
+        {
+            liftPower = 0.5;
+        }
+
+        if (gamepad2.b)
+        {
+            liftPower = -0.5;
+        }
+
+//        if (gamepad2.x)
+//        {
+//            Clawpower = 0.5;
+//        }
+
+//        if (gamepad2.y)
+//        {
+//            Clawpower = -0.5;
+//        }
+
+
+
         leftFrontDrive.setPower((leftFrontPower));
         rightFrontDrive.setPower((rightFrontPower));
         leftBackDrive.setPower((leftBackPower));
         rightBackDrive.setPower((rightBackPower));
+        lift.setPower((liftPower));
+        //Claw.set = Clawpower;
 
         //using for button
-//        if (gamepad2.a)
-//        {
-//            motor.setpower(1);
-//        }
+
 
     }
 
@@ -102,6 +137,7 @@ public class SimpleDrive extends OpMode {
         rightFrontDrive.setPower(0);
         leftBackDrive.setPower(0);
         rightBackDrive.setPower(0);
+
     }
 
 }
