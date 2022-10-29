@@ -182,13 +182,13 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
         else if(tagOfInterest.id == MIDDLE){
             //TRAJECTORY
             tag_number = 2;
-            robot.drive(600, 1, robot.FORWARD);
+            robot.drive(400, 1, robot.FORWARD);
         }
         else{
             //TRAJECTORY
             tag_number = 3;
             robot.drive(600, 1, robot.STRAFERIGHT);
-            robot.drive(600, 1, robot.FORWARD);
+            robot.drive(400, 1, robot.FORWARD);
         }
 
 

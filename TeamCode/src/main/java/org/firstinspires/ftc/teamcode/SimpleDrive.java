@@ -48,10 +48,10 @@ public class SimpleDrive extends OpMode {
         double strafe = gamepad1.left_stick_x;
         double turn = gamepad1.right_stick_x;
 
-        leftFrontPower = Range.clip(drive+ turn + strafe, -1, 1);
-        rightFrontPower = Range.clip(drive - turn - strafe, -1, 1);
-        leftBackPower = Range.clip(drive + turn - strafe, -1, 1);
-        rightBackPower = Range.clip(drive - turn + strafe, -1, 1);
+        leftFrontPower = Range.clip(drive+ turn + strafe, -0.5, 0.5);
+        rightFrontPower = Range.clip(drive - turn - strafe, -0.5, 0.5);
+        leftBackPower = Range.clip(drive + turn - strafe, -0.5, 0.5);
+        rightBackPower = Range.clip(drive - turn + strafe, -0.5, 0.5);
 
         telemetry.addData("left stick X position", gamepad1.left_stick_x);
         telemetry.addData("left front power", leftFrontPower);
