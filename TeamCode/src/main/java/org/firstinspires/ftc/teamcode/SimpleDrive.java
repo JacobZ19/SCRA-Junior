@@ -24,9 +24,8 @@ public class SimpleDrive extends OpMode {
     public final static double ClawMinRange = 0.0;
     public final static double ClawMaxRange = 1.0;
 
-    //servos
-
-
+    //private double shortpole = null;
+    //private double midpole = null;
     @Override
     public void init()
     {
@@ -34,17 +33,19 @@ public class SimpleDrive extends OpMode {
         rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front");
         leftBackDrive = hardwareMap.get(DcMotor.class, "left_back");
         rightBackDrive = hardwareMap.get(DcMotor.class, "right_back");
-        Claw = hardwareMap.servo.get("Arm");
+        Claw = hardwareMap.get(Servo.class, "Claw");
         lift = hardwareMap.get(DcMotor.class,"Lift");
         Claw.setPosition(ClawHome);
 
+        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
 
         leftFrontDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         rightFrontDrive.setDirection(DcMotorSimple.Direction.FORWARD);
         leftBackDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         rightBackDrive.setDirection(DcMotorSimple.Direction.FORWARD);
-        Claw.setDirection(Servo.Direction.FORWARD);
+
         lift.setDirection(DcMotorSimple.Direction.FORWARD);
 
     }
@@ -62,7 +63,7 @@ public class SimpleDrive extends OpMode {
         double rightFrontPower;
         double rightBackPower;
         double liftPower;
-        double Clawpower;
+
 
 
         double drive = -gamepad1.left_stick_y;
@@ -74,13 +75,13 @@ public class SimpleDrive extends OpMode {
         rightFrontPower = Range.clip(drive - turn - strafe, -0.5, 0.5);
         leftBackPower = Range.clip(drive + turn - strafe, -0.5, 0.5);
         rightBackPower = Range.clip(drive - turn + strafe, -0.5, 0.5);
-        liftPower = Range.clip(1, -0.5,0.5);
-        //Clawpower = Range.clip(1, -0.5,0.5);
 
+
+        telemetry.addData("lift motor pos", lift.getCurrentPosition());
         telemetry.addData("left stick X position", gamepad1.left_stick_x);
         telemetry.addData("left front power", leftFrontPower);
         telemetry.addData("This is before the move loop", "It sets x+y by the movement of the joysticks");
-        //telemetry.log().add("hello");
+
 
         telemetry.update();
         if(gamepad1.left_stick_y >= 0.1 && gamepad1.right_stick_x <= -0.1){
@@ -106,24 +107,36 @@ public class SimpleDrive extends OpMode {
             rightBackPower /= 3;
         }
 
-        if (gamepad2.a)
+//        if (gamepad2.a)
+//        {
+//            liftPower = 0.5;
+//        }
+//
+        if (gamepad2.right_bumper)
         {
-            liftPower = 0.5;
+            //lift.setTargetPosition();
+            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        }
+//
+        if (gamepad2.left_bumper)
+        {
+            //lift.setTargetPosition();
+            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        }
+//
+        if (gamepad2.dpad_down)
+        {
+            lift.setTargetPosition(0);
+            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            lift.setPower(0.5);
         }
 
-        if (gamepad2.b)
-        {
-            liftPower = -0.5;
+        if(gamepad2.a) {
+            Claw.setPosition(0.5);
         }
-
-        if (gamepad2.x)
-
-            clawPos += clawSpeed;
-
-
-        if (gamepad2.y)
+        else
         {
-           clawPos -= clawSpeed;
+            Claw.setPosition(0);
         }
 
 
@@ -132,10 +145,9 @@ public class SimpleDrive extends OpMode {
         rightFrontDrive.setPower((rightFrontPower));
         leftBackDrive.setPower((leftBackPower));
         rightBackDrive.setPower((rightBackPower));
-        lift.setPower((liftPower));
 
-        clawPos = Range.clip(clawPos, ClawMinRange, ClawMaxRange);
-        Claw.setPosition(clawPos);
+
+
 
         //using for button
 
@@ -149,7 +161,7 @@ public class SimpleDrive extends OpMode {
         rightFrontDrive.setPower(0);
         leftBackDrive.setPower(0);
         rightBackDrive.setPower(0);
-
+        lift.setPower(0);
     }
 
 }
