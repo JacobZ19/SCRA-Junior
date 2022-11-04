@@ -193,7 +193,7 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
             robot.drive(400, 1, robot.FORWARD);
         }
         else{
-            sleep(10000);
+            sleep(600000);
             robot.drive(620, 1, robot.STRAFELEFT);
 
 
