@@ -33,6 +33,8 @@ import org.openftc.easyopencv.OpenCvInternalCamera;
 import org.firstinspires.ftc.teamcode.auton.AutoDrive;
 import java.util.ArrayList;
 
+// This is partially 22092 cyber eagles work
+
 @TeleOp
 public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
 {

@@ -8,12 +8,6 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import com.qualcomm.robotcore.util.Range;
 
-//
-//
-//
-//
-//
-
 @TeleOp
 public class SimpleDrive extends OpMode {
 
@@ -107,10 +101,10 @@ public class SimpleDrive extends OpMode {
         //using for button
         if (gamepad1.right_bumper)
         {
-            leftFrontPower /= 2.5;
-            leftBackPower /= 2.5;
-            rightFrontPower /= 2.5;
-            rightBackPower /= 2.5;
+            leftFrontPower /= 3;
+            leftBackPower /= 3;
+            rightFrontPower /= 3;
+            rightBackPower /= 3;
         }
 
 //        if (gamepad2.a)
@@ -120,28 +114,21 @@ public class SimpleDrive extends OpMode {
 //
         if (gamepad2.right_bumper)
         {
-            lift.setTargetPosition(270);
+            //lift.setTargetPosition();
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            lift.setPower(0.1);
         }
 //
         if (gamepad2.left_bumper)
         {
-            lift.setTargetPosition(450);
+            //lift.setTargetPosition();
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            lift.setPower(0.1);
         }
 //
         if (gamepad2.dpad_down)
         {
             lift.setTargetPosition(0);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            lift.setPower(-0.1);
-        }
-
-        if (gamepad2.x){
-
-            lift.setPower(0);
+            lift.setPower(0.5);
         }
 
         if(gamepad2.a) {
