@@ -145,11 +145,11 @@ public class SimpleDrive extends OpMode {
         }
 
         if(gamepad2.a) {
-            Claw.setPosition(0.5);
+            Claw.setPosition(0);
         }
         else
         {
-            Claw.setPosition(0);
+            Claw.setPosition(0.5);
         }
 
 
