@@ -91,17 +91,17 @@ public class SimpleDrive extends OpMode {
 
         telemetry.update();
         if(gamepad1.left_stick_y >= 0.1 && gamepad1.right_stick_x <= -0.1){
-            rightFrontPower = 0.5;
-            rightBackPower = 0.5;
-            leftFrontPower = -0.5;
-            leftBackPower = -0.5;
+            rightFrontPower = 0.8;
+            rightBackPower = 0.8;
+            leftFrontPower = -0.8;
+            leftBackPower = -0.8;
         }
 
         else if(gamepad1.left_stick_y <= -0.1 && gamepad1.right_stick_x <= -0.1){
-            leftFrontPower = 0.5;
-            leftBackPower = 0.5;
-            rightFrontPower = -0.5;
-            rightBackPower = -0.5;
+            leftFrontPower = 0.8;
+            leftBackPower = 0.8;
+            rightFrontPower = -0.8;
+            rightBackPower = -0.8;
         }
 
         //using for button
@@ -145,11 +145,12 @@ public class SimpleDrive extends OpMode {
         }
 
         if(gamepad2.a) {
-            Claw.setPosition(0);
+
+            Claw.setPosition(0.5);
         }
         else
         {
-            Claw.setPosition(0.5);
+            Claw.setPosition(0);
         }
 
 
