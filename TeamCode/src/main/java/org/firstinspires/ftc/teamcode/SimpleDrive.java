@@ -24,8 +24,8 @@ public class SimpleDrive extends OpMode {
     public final static double ClawMinRange = 0.0;
     public final static double ClawMaxRange = 1.0;
 
-    // private double shortpole = null;
-    // private double midpole = null;
+    //private double shortpole = null;
+    //private double midpole = null;
     @Override
     public void init()
     {
@@ -114,7 +114,7 @@ public class SimpleDrive extends OpMode {
 //
         if (gamepad2.right_bumper)
         {
-            lift.setTargetPosition(290);
+            lift.setTargetPosition(285);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             lift.setPower(0.1);
         }
@@ -130,16 +130,16 @@ public class SimpleDrive extends OpMode {
         {
             lift.setTargetPosition(0);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            lift.setPower(0.1);
+            lift.setPower(0.2);
         }
 
         if(gamepad2.a) {
 
-            Claw.setPosition(0);
+            Claw.setPosition(0.5);
         }
         else
         {
-            Claw.setPosition(0.5);
+            Claw.setPosition(0);
         }
 
 
