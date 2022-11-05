@@ -130,7 +130,7 @@ public class SimpleDrive extends OpMode {
         {
             lift.setTargetPosition(0);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            lift.setPower(0.1);
+            lift.setPower(0.2);
         }
 
         if(gamepad2.a) {
