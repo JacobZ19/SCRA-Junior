@@ -179,21 +179,21 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
             //TRAJECTORY
             tag_number = 1;
             robot.drive(900, 0.5, robot.STRAFELEFT);
-            sleep(180);
+            sleep(1000);
             robot.drive(740, 0.5, robot.FORWARD);
         }
         else if(tagOfInterest.id == MIDDLE){
             //TRAJECTORY
             tag_number = 2;
             robot.drive(160, 0.5, robot.STRAFELEFT);
-            sleep(180);
+            sleep(1000);
             robot.drive(740, 0.5, robot.FORWARD);
         }
         else if(tagOfInterest.id == RIGHT){
             //TRAJECTORY
             tag_number = 3;
             robot.drive(800, 0.5, robot.STRAFERIGHT);
-            sleep(180);
+            sleep(1000);
             robot.drive(740, 0.5, robot.FORWARD);
         }
         else{
