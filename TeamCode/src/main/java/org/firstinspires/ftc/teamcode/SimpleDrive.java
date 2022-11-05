@@ -149,12 +149,6 @@ public class SimpleDrive extends OpMode {
         leftBackDrive.setPower((leftBackPower));
         rightBackDrive.setPower((rightBackPower));
 
-
-
-
-        //using for button
-
-
     }
 
     @Override
