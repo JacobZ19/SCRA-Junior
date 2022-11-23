@@ -21,10 +21,11 @@
 
 package org.firstinspires.ftc.teamcode.auton;
 
+// Work by Kallen and Aaron 22092
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
@@ -34,39 +35,31 @@ import org.openftc.easyopencv.OpenCvInternalCamera;
 import org.firstinspires.ftc.teamcode.auton.AutoDrive;
 import java.util.ArrayList;
 
-// This is partially 22092 cyber eagles work
+// This is partially 22092 cyber eagles jade work
+// You may only use this code over cyber eagles jade consent
 
-@Autonomous
+@Autonomous(name="Autonomous Code")
+
 public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
 {
     OpenCvCamera camera;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
 
-
     static final double FEET_PER_METER = 3.28084;
 
-
-
-    // Lens intrinsics
-    // UNITS ARE PIXELS
-    // NOTE: this calibration is for the C920 webcam at 800x448.
-    // You will need to do your own calibration for other configurations!
     double fx = 578.272;
     double fy = 578.272;
     double cx = 402.145;
     double cy = 221.506;
     int tag_number;
-
-    // UNITS ARE METERS
     double tagsize = 0.166;
 
-    int LEFT = 1; // Tag IDs 1, 2, 3 from the 36h11 family
+    int LEFT = 1;
     int MIDDLE = 2;
     int RIGHT = 3;
 
     AprilTagDetection tagOfInterest = null;
     AutoDrive robot = new AutoDrive(this);
-
 
     @Override
     public void runOpMode()
@@ -75,7 +68,6 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
         aprilTagDetectionPipeline = new AprilTagDetectionPipeline(tagsize, fx, fy, cx, cy);
-
         camera.setPipeline(aprilTagDetectionPipeline);
         camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
         {
@@ -87,17 +79,11 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
 
             @Override
             public void onError(int errorCode)
-            {
-
-            }
+            {}
         });
 
         telemetry.setMsTransmissionInterval(50);
 
-        /*
-         * The INIT-loop:
-         * This REPLACES waitForStart!
-         */
         while (!isStarted() && !isStopRequested())
         {
             ArrayList<AprilTagDetection> currentDetections = aprilTagDetectionPipeline.getLatestDetections();
@@ -135,7 +121,6 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
                         tagToTelemetry(tagOfInterest);
                     }
                 }
-
             }
             else
             {
@@ -157,12 +142,6 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
             sleep(20);
         }
 
-        /*
-         * The START command just came in: now work off the latest snapshot acquired
-         * during the init loop.
-         */
-
-        /* Update the telemetry */
         if(tagOfInterest != null)
         {
             telemetry.addLine("Tag snapshot:\n");
@@ -175,23 +154,19 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
             telemetry.update();
         }
 
-        /* Actually do something useful */
         if(tagOfInterest == null || tagOfInterest.id == LEFT){
-            //TRAJECTORY
             tag_number = 1;
-            robot.drive(900, 0.5, robot.STRAFELEFT);
+            robot.drive(1200, 0.5, robot.STRAFELEFT);
             sleep(1000);
             robot.drive(740, 0.5, robot.FORWARD);
         }
         else if(tagOfInterest.id == MIDDLE){
-            //TRAJECTORY
             tag_number = 2;
             robot.drive(160, 0.5, robot.STRAFELEFT);
             sleep(1000);
             robot.drive(740, 0.5, robot.FORWARD);
         }
         else if(tagOfInterest.id == RIGHT){
-            //TRAJECTORY
             tag_number = 3;
             robot.drive(800, 0.5, robot.STRAFERIGHT);
             sleep(1000);
@@ -201,9 +176,7 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
             sleep(600000);
     }
 
-
-        /* You wouldn't have this in your autonomous, this is just to prevent the sample from ending */
-        while (opModeIsActive()) {sleep(20);}
+                while (opModeIsActive()) {sleep(20);}
     }
 
     void tagToTelemetry(AprilTagDetection detection)

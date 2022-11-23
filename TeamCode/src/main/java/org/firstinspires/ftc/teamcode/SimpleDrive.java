@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+// Work by Kallen and Aaron 22092
+
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -8,9 +10,11 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import com.qualcomm.robotcore.util.Range;
 
-// This is 22092 cyber eagles work
+// This is 22092 cyber eagles jade work
+// You may only use this code over cyber eagles jade consent
 
-@TeleOp
+@TeleOp(name="Drive")
+
 public class SimpleDrive extends OpMode {
 
     double clawPos = ClawHome;
@@ -22,12 +26,11 @@ public class SimpleDrive extends OpMode {
     private DcMotor lift = null;
     public Servo Claw = null;
     public final static double ClawHome = 0.0;
+    public float liftpos;
 
     public final static double ClawMinRange = 0.0;
     public final static double ClawMaxRange = 1.0;
 
-    //private double shortpole = null;
-    //private double midpole = null;
     @Override
     public void init()
     {
@@ -109,25 +112,21 @@ public class SimpleDrive extends OpMode {
             rightBackPower /= 3;
         }
 
-//        if (gamepad2.a)
-//        {
-//            liftPower = 0.5;
-//        }
-//
         if (gamepad2.right_bumper)
         {
             lift.setTargetPosition(285);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             lift.setPower(0.1);
         }
-//
+
         if (gamepad2.left_bumper)
         {
             lift.setTargetPosition(450);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             lift.setPower(0.1);
+
         }
-//
+
         if (gamepad2.dpad_down)
         {
             lift.setTargetPosition(0);
@@ -135,15 +134,30 @@ public class SimpleDrive extends OpMode {
             lift.setPower(0.2);
         }
 
-        if(gamepad2.a) {
+        if (gamepad2.dpad_right && liftpos <=450) {
+            liftpos = lift.getCurrentPosition();
+            liftpos += 5;
+            lift.setTargetPosition((int) liftpos);
+            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            lift.setPower(0.1);
+        }
 
+        if (gamepad2.dpad_left && liftpos >=-2) {
+            liftpos = lift.getCurrentPosition();
+            liftpos -= 5;
+            lift.setTargetPosition((int) liftpos);
+            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            lift.setPower(0.1);
+        }
+
+        if(gamepad2.a) {
             Claw.setPosition(0.5);
         }
-        else
-        {
+        if(gamepad2.b) {
             Claw.setPosition(0);
         }
 
+//I AM SHREK
 
 
         leftFrontDrive.setPower((leftFrontPower));

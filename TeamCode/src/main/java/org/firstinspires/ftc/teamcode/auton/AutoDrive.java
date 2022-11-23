@@ -1,12 +1,15 @@
 package org.firstinspires.ftc.teamcode.auton;
 
+// Work by Kallen 22092
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-// This is 22092 cyber eagles work
+// This is 22092 cyber eagles jade work
+// You may only use this code over cyber eagles jade consent
 
 @Autonomous
 public class AutoDrive {
@@ -75,7 +78,6 @@ public class AutoDrive {
         }
 
         else if (direction == STRAFERIGHT) {
-
 
             leftFrontDrive.setPower(power * 1);
             leftBackDrive.setPower(power * -1);
