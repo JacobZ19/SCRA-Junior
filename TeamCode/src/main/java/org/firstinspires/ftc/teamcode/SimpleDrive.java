@@ -23,6 +23,7 @@ public class SimpleDrive extends OpMode {
     public Servo Claw = null;
     public float OpenClose = 0f;
     public final static double ClawHome = 0.0;
+    public float liftpos;
 
     public final static double ClawMinRange = 0.0;
     public final static double ClawMaxRange = 1.0;
@@ -134,6 +135,22 @@ public class SimpleDrive extends OpMode {
             lift.setTargetPosition(0);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             lift.setPower(0.2);
+        }
+
+        if (gamepad2.dpad_right && liftpos <=450) {
+            liftpos = lift.getCurrentPosition();
+            liftpos += 5;
+            lift.setTargetPosition((int) liftpos);
+            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            lift.setPower(0.1);
+        }
+
+        if (gamepad2.dpad_left && liftpos >=-2) {
+            liftpos = lift.getCurrentPosition();
+            liftpos -= 5;
+            lift.setTargetPosition((int) liftpos);
+            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            lift.setPower(0.1);
         }
 
         if(gamepad2.a && OpenClose == 0) {
