@@ -24,6 +24,9 @@ public class SimpleDrive extends OpMode {
     public float OpenClose = 0f;
     public final static double ClawHome = 0.0;
     public float liftpos;
+    public float r = 1;
+    public float rot;
+    boolean changed = false; //Outside of loop()
 
     public final static double ClawMinRange = 0.0;
     public final static double ClawMaxRange = 1.0;
@@ -116,14 +119,14 @@ public class SimpleDrive extends OpMode {
 //            liftPower = 0.5;
 //        }
 //
-        if (gamepad2.right_bumper)
+        if (gamepad2.a)
         {
             lift.setTargetPosition(285);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             lift.setPower(0.1);
         }
 //
-        if (gamepad2.left_bumper)
+        if (gamepad2.b)
         {
             lift.setTargetPosition(450);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -144,24 +147,32 @@ public class SimpleDrive extends OpMode {
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             lift.setPower(0.1);
         }
+        else if (gamepad2.dpad_left && liftpos >=-2) {
 
-        if (gamepad2.dpad_left && liftpos >=-2) {
             liftpos = lift.getCurrentPosition();
             liftpos -= 5;
             lift.setTargetPosition((int) liftpos);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             lift.setPower(0.1);
+
         }
 
-        if(gamepad2.a && OpenClose == 0) {
-
-            Claw.setPosition(0.5);
-            OpenClose = 1;
-        }
-        else if(gamepad2.a && OpenClose == 1) {
+        //this is what i changed
+        if(gamepad2.left_bumper){
             Claw.setPosition(0);
-            OpenClose = 0;
         }
+        else if(gamepad2.right_bumper){
+            Claw.setPosition(0.5);
+        }
+        //else if(!gamepad1.a) changed = false;
+
+
+
+
+
+
+
+
 
 
 
