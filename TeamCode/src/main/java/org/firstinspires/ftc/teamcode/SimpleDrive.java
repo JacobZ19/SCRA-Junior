@@ -114,6 +114,14 @@ public class SimpleDrive extends OpMode {
             rightBackPower /= 3;
         }
 
+        if (gamepad1.left_bumper)
+        {
+            leftFrontPower /= 2;
+            leftBackPower /= 2;
+            rightFrontPower /= 2;
+            rightBackPower /= 2;
+        }
+
 //        if (gamepad2.a)
 //        {
 //            liftPower = 0.5;
@@ -142,7 +150,7 @@ public class SimpleDrive extends OpMode {
 
         if (gamepad2.dpad_right && liftpos <=450) {
             liftpos = lift.getCurrentPosition();
-            liftpos += 5;
+            liftpos += 6;
             lift.setTargetPosition((int) liftpos);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             lift.setPower(0.1);
@@ -150,7 +158,7 @@ public class SimpleDrive extends OpMode {
         else if (gamepad2.dpad_left && liftpos >=-2) {
 
             liftpos = lift.getCurrentPosition();
-            liftpos -= 5;
+            liftpos -= 6;
             lift.setTargetPosition((int) liftpos);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             lift.setPower(0.1);
