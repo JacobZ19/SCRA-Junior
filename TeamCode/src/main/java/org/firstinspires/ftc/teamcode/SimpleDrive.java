@@ -1,41 +1,52 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
-
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-// This is 22092 cyber eagles work
-
 @TeleOp
+
 public class SimpleDrive extends OpMode {
 
-    double clawPos = ClawHome;
-    final double clawSpeed = 0.01;
+    boolean highLevel = false;
+    boolean secondHalf = false;
+    boolean LastCall = false;
     private DcMotor leftFrontDrive = null;
     private DcMotor rightFrontDrive = null;
     private DcMotor leftBackDrive = null;
     private DcMotor rightBackDrive = null;
     private DcMotor lift = null;
     public Servo Claw = null;
-    public float OpenClose = 0f;
     public final static double ClawHome = 0.0;
     public float liftpos;
-    public float r = 1;
-    public float rot;
-    boolean changed = false; //Outside of loop()
 
-    public final static double ClawMinRange = 0.0;
-    public final static double ClawMaxRange = 1.0;
+    Gamepad.RumbleEffect customRumbleEffect;
+    Gamepad.RumbleEffect customRumbleEffect2;
+    ElapsedTime runtime = new ElapsedTime();
 
-    //private double shortpole = null;
-    //private double midpole = null;
+    final double Endgame = 80.0;
+    final double EndofGame = 110.0;
+
+
+
     @Override
     public void init()
     {
+        telemetry.addLine("Hello.");
+        customRumbleEffect = new Gamepad.RumbleEffect.Builder()
+                .addStep(1.0, 1.0, 500)
+                .build();
+        customRumbleEffect2 = new Gamepad.RumbleEffect.Builder()
+                .addStep(1.0, 1.0, 1000)
+                .build();
+
+        telemetry.addData(">", "Press Start");
+        telemetry.update();
         leftFrontDrive = hardwareMap.get(DcMotor.class, "left_front");
         rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front");
         leftBackDrive = hardwareMap.get(DcMotor.class, "left_back");
@@ -59,7 +70,35 @@ public class SimpleDrive extends OpMode {
 
     @Override
     public void start(){
+        runtime.reset();
+        boolean started = true;
+        while(started){
+            if ((runtime.seconds() > Endgame) && !secondHalf)  {
+            gamepad1.runRumbleEffect(customRumbleEffect);
+            gamepad2.runRumbleEffect(customRumbleEffect);
+            secondHalf =true;
+        }
 
+            if (!secondHalf) {
+                telemetry.addData(">", "Endgame Countdown \n", (Endgame - runtime.seconds()) );
+            }
+            if ((runtime.seconds() > EndofGame) && !LastCall) {
+                gamepad1.runRumbleEffect(customRumbleEffect2);
+                gamepad2.runRumbleEffect(customRumbleEffect2);
+                LastCall =true;
+            }
+
+            if (!LastCall) {
+                telemetry.addData(">", "END COUNTDOWN \n", (EndofGame - runtime.seconds()) );
+            }
+            else{
+                telemetry.addLine("GET TO THE TERMINAL!!!");
+                telemetry.addLine("GET TO THE TERMINAL!!!");
+                telemetry.addLine("GET TO THE TERMINAL!!!");
+                telemetry.addLine("GET TO THE TERMINAL!!!");
+            }
+
+        }
     }
 
 
