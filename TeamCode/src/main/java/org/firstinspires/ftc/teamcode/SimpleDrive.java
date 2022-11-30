@@ -64,7 +64,7 @@ public class SimpleDrive extends OpMode {
         leftBackDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         rightBackDrive.setDirection(DcMotorSimple.Direction.FORWARD);
 
-        lift.setDirection(DcMotorSimple.Direction.FORWARD);
+        lift.setDirection(DcMotorSimple.Direction.REVERSE);
 
     }
 
@@ -245,3 +245,8 @@ public class SimpleDrive extends OpMode {
     }
 
 }
+
+/** SHREK IS KINDA GOOD AT LIFE!!!
+ * CAUSE SHREK. . . IS BETTTTTER!!!!!
+ * LIFE IS EASIER FOR SHREK!!!!
+ */
