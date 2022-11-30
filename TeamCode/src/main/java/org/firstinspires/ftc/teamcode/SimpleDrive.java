@@ -70,35 +70,7 @@ public class SimpleDrive extends OpMode {
 
     @Override
     public void start(){
-        runtime.reset();
-        boolean started = true;
-        while(started){
-            if ((runtime.seconds() > Endgame) && !secondHalf)  {
-            gamepad1.runRumbleEffect(customRumbleEffect);
-            gamepad2.runRumbleEffect(customRumbleEffect);
-            secondHalf =true;
-        }
 
-            if (!secondHalf) {
-                telemetry.addData(">", "Endgame Countdown \n", (Endgame - runtime.seconds()) );
-            }
-            if ((runtime.seconds() > EndofGame) && !LastCall) {
-                gamepad1.runRumbleEffect(customRumbleEffect2);
-                gamepad2.runRumbleEffect(customRumbleEffect2);
-                LastCall =true;
-            }
-
-            if (!LastCall) {
-                telemetry.addData(">", "END COUNTDOWN \n", (EndofGame - runtime.seconds()) );
-            }
-            else{
-                telemetry.addLine("GET TO THE TERMINAL!!!");
-                telemetry.addLine("GET TO THE TERMINAL!!!");
-                telemetry.addLine("GET TO THE TERMINAL!!!");
-                telemetry.addLine("GET TO THE TERMINAL!!!");
-            }
-
-        }
     }
 
 
@@ -109,6 +81,35 @@ public class SimpleDrive extends OpMode {
         double rightFrontPower;
         double rightBackPower;
         double liftPower;
+//        runtime.reset();
+//        boolean started = true;
+//        while(started){
+//            if ((runtime.seconds() > Endgame) && !secondHalf)  {
+//                gamepad1.runRumbleEffect(customRumbleEffect);
+//                gamepad2.runRumbleEffect(customRumbleEffect);
+//                secondHalf =true;
+//            }
+//
+//            if (!secondHalf) {
+//                telemetry.addData(">", "Endgame Countdown \n", (Endgame - runtime.seconds()) );
+//            }
+//            if ((runtime.seconds() > EndofGame) && !LastCall) {
+//                gamepad1.runRumbleEffect(customRumbleEffect2);
+//                gamepad2.runRumbleEffect(customRumbleEffect2);
+//                LastCall =true;
+//            }
+//
+//            if (!LastCall) {
+//                telemetry.addData(">", "END COUNTDOWN \n", (EndofGame - runtime.seconds()) );
+//            }
+//            else{
+//                telemetry.addLine("GET TO THE TERMINAL!!!");
+//                telemetry.addLine("GET TO THE TERMINAL!!!");
+//                telemetry.addLine("GET TO THE TERMINAL!!!");
+//                telemetry.addLine("GET TO THE TERMINAL!!!");
+//            }
+//
+//        }
 
 
 
