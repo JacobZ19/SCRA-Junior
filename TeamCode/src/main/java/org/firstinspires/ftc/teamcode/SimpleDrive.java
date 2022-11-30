@@ -64,13 +64,41 @@ public class SimpleDrive extends OpMode {
         leftBackDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         rightBackDrive.setDirection(DcMotorSimple.Direction.FORWARD);
 
-        lift.setDirection(DcMotorSimple.Direction.FORWARD);
+        lift.setDirection(DcMotorSimple.Direction.REVERSE);
 
     }
 
     @Override
     public void start(){
+        runtime.reset();
+        boolean started = true;
+        while(started){
+            if ((runtime.seconds() > Endgame) && !secondHalf)  {
+            gamepad1.runRumbleEffect(customRumbleEffect);
+            gamepad2.runRumbleEffect(customRumbleEffect);
+            secondHalf =true;
+        }
 
+            if (!secondHalf) {
+                telemetry.addData(">", "Endgame Countdown \n", (Endgame - runtime.seconds()) );
+            }
+            if ((runtime.seconds() > EndofGame) && !LastCall) {
+                gamepad1.runRumbleEffect(customRumbleEffect2);
+                gamepad2.runRumbleEffect(customRumbleEffect2);
+                LastCall =true;
+            }
+
+            if (!LastCall) {
+                telemetry.addData(">", "END COUNTDOWN \n", (EndofGame - runtime.seconds()) );
+            }
+            else{
+                telemetry.addLine("GET TO THE TERMINAL!!!");
+                telemetry.addLine("GET TO THE TERMINAL!!!");
+                telemetry.addLine("GET TO THE TERMINAL!!!");
+                telemetry.addLine("GET TO THE TERMINAL!!!");
+            }
+
+        }
     }
 
 
@@ -81,8 +109,6 @@ public class SimpleDrive extends OpMode {
         double rightFrontPower;
         double rightBackPower;
         double liftPower;
-        runtime.reset();
-        boolean started = true;
 
 
 
@@ -104,35 +130,6 @@ public class SimpleDrive extends OpMode {
 
 
         telemetry.update();
-
-            if ((runtime.seconds() > Endgame) && !secondHalf)  {
-                gamepad1.runRumbleEffect(customRumbleEffect);
-                gamepad2.runRumbleEffect(customRumbleEffect);
-                secondHalf =true;
-            }
-
-            if (!secondHalf) {
-                telemetry.addData(">", "Endgame Countdown \n", (Endgame - runtime.seconds()) );
-            }
-            if ((runtime.seconds() > EndofGame) && !LastCall) {
-                gamepad1.runRumbleEffect(customRumbleEffect2);
-                gamepad2.runRumbleEffect(customRumbleEffect2);
-                LastCall =true;
-            }
-
-            if (!LastCall) {
-                telemetry.addData(">", "END COUNTDOWN \n", (EndofGame - runtime.seconds()) );
-            }
-            else{
-                telemetry.addLine("GET TO THE TERMINAL!!!");
-                telemetry.addLine("GET TO THE TERMINAL!!!");
-                telemetry.addLine("GET TO THE TERMINAL!!!");
-                telemetry.addLine("GET TO THE TERMINAL!!!");
-            }
-
-
-
-
         if(gamepad1.left_stick_y >= 0.1 && gamepad1.right_stick_x <= -0.1){
             rightFrontPower = 0.8;
             rightBackPower = 0.8;
@@ -209,10 +206,10 @@ public class SimpleDrive extends OpMode {
 
         //this is what i changed
         if(gamepad2.left_bumper){
-            Claw.setPosition(0.6);
+            Claw.setPosition(0);
         }
         else if(gamepad2.right_bumper){
-            Claw.setPosition(0.8);
+            Claw.setPosition(0.5);
         }
         //else if(!gamepad1.a) changed = false;
 
