@@ -64,7 +64,7 @@ public class SimpleDrive extends OpMode {
         leftBackDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         rightBackDrive.setDirection(DcMotorSimple.Direction.FORWARD);
 
-        lift.setDirection(DcMotorSimple.Direction.REVERSE);
+        lift.setDirection(DcMotorSimple.Direction.FORWARD);
 
     }
 
@@ -130,15 +130,8 @@ public class SimpleDrive extends OpMode {
                 telemetry.addLine("GET TO THE TERMINAL!!!");
             }
 
-/** Mr. Beast is the best YouTuber
- *  Dream is the fakest YouTuber
- *  I hope your life is good
- *  Because Shrek is good
- *  I think that if your life is good
- *  Then you will live a happy life
- *  I love sketchy websites
- *  Cause it always gives you viruses!
- */
+
+
 
         if(gamepad1.left_stick_y >= 0.1 && gamepad1.right_stick_x <= -0.1){
             rightFrontPower = 0.8;
