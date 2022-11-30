@@ -172,14 +172,14 @@ public class SimpleDrive extends OpMode {
 //
         if (gamepad2.a)
         {
-            lift.setTargetPosition(285);
+            lift.setTargetPosition(219);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             lift.setPower(0.1);
         }
 //
         if (gamepad2.b)
         {
-            lift.setTargetPosition(450);
+            lift.setTargetPosition(353);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             lift.setPower(0.1);
         }
@@ -188,7 +188,7 @@ public class SimpleDrive extends OpMode {
         {
             lift.setTargetPosition(0);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            lift.setPower(0.2);
+            lift.setPower(0.12511238294583);
         }
 
         if (gamepad2.dpad_right && liftpos <=450) {
@@ -210,10 +210,10 @@ public class SimpleDrive extends OpMode {
 
         //this is what i changed
         if(gamepad2.left_bumper){
-            Claw.setPosition(0.6);
+            Claw.setPosition(0.0);
         }
         else if(gamepad2.right_bumper){
-            Claw.setPosition(0.8);
+            Claw.setPosition(0.35);
         }
         //else if(!gamepad1.a) changed = false;
 
