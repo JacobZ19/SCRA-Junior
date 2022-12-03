@@ -79,7 +79,6 @@ public class SimpleDrive extends OpMode {
         double leftBackPower;
         double rightFrontPower;
         double rightBackPower;
-        double liftPower;
         runtime.reset();
         boolean started = true;
 
