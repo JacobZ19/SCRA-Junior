@@ -13,7 +13,6 @@ import com.qualcomm.robotcore.util.Range;
 
 public class SimpleDrive extends OpMode {
 
-    boolean highLevel = false;
     boolean secondHalf = false;
     boolean LastCall = false;
     private DcMotor leftFrontDrive = null;
@@ -37,7 +36,6 @@ public class SimpleDrive extends OpMode {
     @Override
     public void init()
     {
-        telemetry.addLine("Hello.");
         customRumbleEffect = new Gamepad.RumbleEffect.Builder()
                 .addStep(1.0, 1.0, 500)
                 .build();
@@ -58,14 +56,12 @@ public class SimpleDrive extends OpMode {
         lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
-
         leftFrontDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         rightFrontDrive.setDirection(DcMotorSimple.Direction.FORWARD);
         leftBackDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         rightBackDrive.setDirection(DcMotorSimple.Direction.FORWARD);
 
         lift.setDirection(DcMotorSimple.Direction.REVERSE);
-
     }
 
     @Override
@@ -77,6 +73,7 @@ public class SimpleDrive extends OpMode {
 
     @Override
     public void loop() {
+        boolean cooldown = false;
         double leftFrontPower;
         double leftBackPower;
         double rightFrontPower;
@@ -102,6 +99,15 @@ public class SimpleDrive extends OpMode {
         telemetry.addData("left stick X position", gamepad1.left_stick_x);
         telemetry.addData("left front power", leftFrontPower);
         telemetry.addData("This is before the move loop", "It sets x+y by the movement of the joysticks");
+
+        if (!!cooldown) {
+            try {
+                wait(2);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            cooldown = false;
+        }
 
 
         telemetry.update();
@@ -165,23 +171,24 @@ public class SimpleDrive extends OpMode {
             rightBackPower /= 2;
         }
 
-//        if (gamepad2.a)
-//        {
-//            liftPower = 0.5;
-//        }
-//
         if (gamepad2.a)
         {
-            lift.setTargetPosition(219);
+            lift.setTargetPosition(280);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             lift.setPower(0.1);
         }
 //
         if (gamepad2.b)
         {
-            lift.setTargetPosition(353);
+            lift.setTargetPosition(440);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             lift.setPower(0.1);
+        }
+        if (gamepad2.x)
+        {
+            lift.setTargetPosition(60);
+            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            lift.setPower(0.2);
         }
 //
         if (gamepad2.dpad_down)
