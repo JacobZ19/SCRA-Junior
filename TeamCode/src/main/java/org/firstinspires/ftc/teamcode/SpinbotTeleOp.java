@@ -100,7 +100,6 @@ public class SpinbotTeleOp extends OpMode {
         double rightFrontPower;
         double rightBackPower;
         runtime.reset();
-        boolean started = true;
 
 
         double drive = -gamepad1.left_stick_y;
@@ -128,7 +127,7 @@ public class SpinbotTeleOp extends OpMode {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            cooldown = false;
+            cooldown = true;
         }
 
         telemetry.update();
