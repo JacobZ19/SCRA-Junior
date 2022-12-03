@@ -1,9 +1,6 @@
 //Useless
 package org.firstinspires.ftc.teamcode;
 
-
-/**Imports*/
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -149,5 +146,85 @@ public class SpinbotTeleOp extends OpMode {
             rightFrontPower = -0.8;
             rightBackPower = -0.8;
         }
+        if (gamepad1.right_bumper)
+        {
+            leftFrontPower /= 3;
+            leftBackPower /= 3;
+            rightFrontPower /= 3;
+            rightBackPower /= 3;
+        }
+
+        if (gamepad1.left_bumper)
+        {
+            leftFrontPower /= 2;
+            leftBackPower /= 2;
+            rightFrontPower /= 2;
+            rightBackPower /= 2;
+        }
+
+        if (gamepad2.a)
+        {
+            lift.setTargetPosition(280);
+            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            lift.setPower(0.1);
+        }
+
+        if (gamepad2.b)
+        {
+            lift.setTargetPosition(440);
+            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            lift.setPower(0.1);
+        }
+        if (gamepad2.x)
+        {
+            lift.setTargetPosition(60);
+            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            lift.setPower(0.2);
+        }
+
+        if (gamepad2.dpad_down)
+        {
+            lift.setTargetPosition(0);
+            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            lift.setPower(0.12511238294583);
+        }
+
+        if (gamepad2.dpad_right && liftpos <=450) {
+            liftpos = lift.getCurrentPosition();
+            liftpos += 6;
+            lift.setTargetPosition((int) liftpos);
+            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            lift.setPower(0.1);
+        }
+        else if (gamepad2.dpad_left && liftpos >=-2) {
+
+            liftpos = lift.getCurrentPosition();
+            liftpos -= 6;
+            lift.setTargetPosition((int) liftpos);
+            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            lift.setPower(0.1);
+
+            if(gamepad2.left_bumper){
+                Claw.setPosition(0.0);
+            }
+            else if(gamepad2.right_bumper){
+                Claw.setPosition(0.35);
+            }
+            leftFrontDrive.setPower((leftFrontPower));
+            rightFrontDrive.setPower((rightFrontPower));
+            leftBackDrive.setPower((leftBackPower));
+            rightBackDrive.setPower((rightBackPower));
+
+        }
+
+    }
+    @Override
+    public void stop()
+    {
+        leftFrontDrive.setPower(0);
+        rightFrontDrive.setPower(0);
+        leftBackDrive.setPower(0);
+        rightBackDrive.setPower(0);
+        lift.setPower(0);
     }
 }
