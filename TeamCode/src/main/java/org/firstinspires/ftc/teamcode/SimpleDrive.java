@@ -116,6 +116,7 @@ public class SimpleDrive extends OpMode {
                 gamepad1.runRumbleEffect(customRumbleEffect);
                 gamepad2.runRumbleEffect(customRumbleEffect);
                 secondHalf =true;
+                gamepad1.rumbleBlips(3);
             }
 
             if (!secondHalf) {
@@ -125,6 +126,7 @@ public class SimpleDrive extends OpMode {
                 gamepad1.runRumbleEffect(customRumbleEffect2);
                 gamepad2.runRumbleEffect(customRumbleEffect2);
                 LastCall =true;
+                gamepad1.rumbleBlips(3);
             }
 
             if (!LastCall) {
@@ -224,6 +226,10 @@ public class SimpleDrive extends OpMode {
         }
         //else if(!gamepad1.a) changed = false;
 
+        if(gamepad1.x)
+        {
+            gamepad1.runRumbleEffect(customRumbleEffect2);
+        }
 
 
 
