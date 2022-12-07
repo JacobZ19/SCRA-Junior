@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 @TeleOp
-@Disabled
+
 public class SimpleDrive extends OpMode {
 
     boolean secondHalf = false;
@@ -156,6 +156,26 @@ public class SimpleDrive extends OpMode {
             rightBackPower = -0.8;
         }
 
+        if (gamepad2.dpad_right && liftpos <=450) {
+            liftpos = lift.getCurrentPosition();
+            liftpos += 36;
+            lift.setTargetPosition((int) liftpos);
+
+            lift.setPower(0.2);
+
+            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        }
+        else if (gamepad2.dpad_left && liftpos < 0) {
+
+            liftpos = lift.getCurrentPosition();
+            liftpos -= 36;
+            lift.setTargetPosition((int) liftpos);
+
+            lift.setPower(0.2);
+
+            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        }
+
         //using for button
         if (gamepad1.right_bumper)
         {
@@ -175,23 +195,23 @@ public class SimpleDrive extends OpMode {
 
         if (gamepad2.a)
         {
-            lift.setTargetPosition(280);
+            lift.setTargetPosition(270);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             lift.setPower(0.1);
         }
 //
         if (gamepad2.b)
         {
-            lift.setTargetPosition(440);
+            lift.setTargetPosition(430);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             lift.setPower(0.1);
         }
-        if (gamepad2.x)
-        {
-            lift.setTargetPosition(60);
-            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            lift.setPower(0.2);
-        }
+//        if (gamepad2.x)
+//        {
+//            lift.setTargetPosition(60);
+//            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//            lift.setPower(0.2);
+//        }
 //
         if (gamepad2.dpad_down)
         {
@@ -200,22 +220,7 @@ public class SimpleDrive extends OpMode {
             lift.setPower(0.12511238294583);
         }
 
-        if (gamepad2.dpad_right && liftpos <=450) {
-            liftpos = lift.getCurrentPosition();
-            liftpos += 6;
-            lift.setTargetPosition((int) liftpos);
-            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            lift.setPower(0.1);
-        }
-        else if (gamepad2.dpad_left && liftpos >=-2) {
 
-            liftpos = lift.getCurrentPosition();
-            liftpos -= 6;
-            lift.setTargetPosition((int) liftpos);
-            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            lift.setPower(0.1);
-
-        }
 
         //this is what i changed
         if(gamepad2.left_bumper){

@@ -38,9 +38,9 @@ import java.util.ArrayList;
 // This is partially 22092 cyber eagles jade work
 // You may only use this code over cyber eagles jade consent
 
-@Autonomous(name="Autonomous Code Red")
+@Autonomous(name="Autonomous Code Blue")
 
-public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
+public class AprilTagAutonomousInitDetectionExampleBlue extends LinearOpMode
 {
     OpenCvCamera camera;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
@@ -154,37 +154,34 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
             telemetry.update();
         }
 
-        if(tagOfInterest == null || tagOfInterest.id == LEFT){
-            tag_number = 1;
-            robot.drive(1350, 0.5, robot.STRAFELEFT);
-
-            robot.drive(200, -0.5, robot.STRAFELEFT);
-            sleep(1000);
-            robot.drive(370, 0.5, robot.FORWARD);
-            robot.drive(200, 0.5, robot.STRAFELEFT);
-            robot.drive(400, 0.5, robot.FORWARD);
-            robot.drive(300, 0.5, robot.STRAFELEFT);
-        }
-        else if(tagOfInterest.id == MIDDLE){
-            tag_number = 2;
-            robot.drive(1300, 0.5, robot.STRAFELEFT);
+        if(tagOfInterest == null || tagOfInterest.id == RIGHT){
+            tag_number = 3;
             robot.drive(1300, -0.5, robot.STRAFELEFT);
+
             robot.drive(160, 0.5, robot.STRAFELEFT);
             sleep(1000);
             robot.drive(740, 0.5, robot.FORWARD);
         }
-        else if(tagOfInterest.id == RIGHT){
-            tag_number = 3;
-            robot.drive(1300, 0.5, robot.STRAFELEFT);
+        else if(tagOfInterest.id == MIDDLE){
+            tag_number = 2;
             robot.drive(1300, -0.5, robot.STRAFELEFT);
-            robot.drive(820, 0.5, robot.STRAFERIGHT);
+            robot.drive(1300, 0.5, robot.STRAFELEFT);
+            robot.drive(100, -0.5, robot.STRAFELEFT);
+            sleep(1000);
+            robot.drive(740, 0.5, robot.FORWARD);
+        }
+        else if(tagOfInterest.id == LEFT){
+            tag_number = 1;
+            robot.drive(1300, -0.5, robot.STRAFELEFT);
+            robot.drive(1300, 0.5, robot.STRAFELEFT);
+            robot.drive(820, -0.5, robot.STRAFERIGHT);
             sleep(1000);
             robot.drive(740, 0.5, robot.FORWARD);
         }
         else{
             sleep(600000);
-    }
-            while (opModeIsActive()) {sleep(20);}
+        }
+        while (opModeIsActive()) {sleep(20);}
     }
 
     void tagToTelemetry(AprilTagDetection detection)
