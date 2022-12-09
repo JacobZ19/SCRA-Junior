@@ -157,10 +157,10 @@ public class AprilTagAutonomousInitDetectionExampleBlue extends LinearOpMode
         if(tagOfInterest == null || tagOfInterest.id == RIGHT){
             tag_number = 3;
             robot.drive(1300, -0.5, robot.STRAFELEFT);
-
-            robot.drive(160, 0.5, robot.STRAFELEFT);
-            sleep(1000);
-            robot.drive(740, 0.5, robot.FORWARD);
+            robot.drive(1300, 0.5, robot.STRAFELEFT);
+            robot.drive(200, -0.5, robot.STRAFELEFT);
+            robot.drive(800, 0.5, robot.FORWARD);
+            robot.drive(1300, -0.5, robot.STRAFELEFT);
         }
         else if(tagOfInterest.id == MIDDLE){
             tag_number = 2;
