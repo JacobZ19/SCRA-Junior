@@ -14,6 +14,7 @@ import com.qualcomm.robotcore.util.Range;
 
 public class SimpleDrive extends OpMode {
 
+    //sets all other varables
     boolean secondHalf = false;
     boolean LastCall = false;
     private DcMotor leftFrontDrive = null;
@@ -25,10 +26,12 @@ public class SimpleDrive extends OpMode {
     public final static double ClawHome = 0.0;
     public float liftpos;
 
+    //rumble effects
     Gamepad.RumbleEffect customRumbleEffect;
     Gamepad.RumbleEffect customRumbleEffect2;
     ElapsedTime runtime = new ElapsedTime();
 
+    //endgame timers
     final double Endgame = 80.0;
     final double EndofGame = 110.0;
 
@@ -37,6 +40,7 @@ public class SimpleDrive extends OpMode {
     @Override
     public void init()
     {
+        //custom rumble effect
         customRumbleEffect = new Gamepad.RumbleEffect.Builder()
                 .addStep(1.0, 1.0, 500)
                 .build();
@@ -44,8 +48,11 @@ public class SimpleDrive extends OpMode {
                 .addStep(1.0, 1.0, 1000)
                 .build();
 
+        //tells you to press start
         telemetry.addData(">", "Press Start");
         telemetry.update();
+
+        //finds the DCMOTORS
         leftFrontDrive = hardwareMap.get(DcMotor.class, "left_front");
         rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front");
         leftBackDrive = hardwareMap.get(DcMotor.class, "left_back");
@@ -54,6 +61,7 @@ public class SimpleDrive extends OpMode {
         lift = hardwareMap.get(DcMotor.class,"Lift");
         Claw.setPosition(ClawHome);
 
+        //resets and sets lift and drive motions
         lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
@@ -74,6 +82,7 @@ public class SimpleDrive extends OpMode {
 
     @Override
     public void loop() {
+        //sets most drive things
         boolean cooldown = false;
         double leftFrontPower;
         double leftBackPower;
@@ -83,22 +92,25 @@ public class SimpleDrive extends OpMode {
         boolean started = true;
 
 
-
+        //set drive controls
         double drive = -gamepad1.left_stick_y;
         double strafe = gamepad1.left_stick_x;
         double turn = gamepad1.right_stick_x;
 
-
+        //set moter power
         leftFrontPower = Range.clip(drive+ turn + strafe, -0.5, 0.5);
         rightFrontPower = Range.clip(drive - turn - strafe, -0.5, 0.5);
         leftBackPower = Range.clip(drive + turn - strafe, -0.5, 0.5);
         rightBackPower = Range.clip(drive - turn + strafe, -0.5, 0.5);
 
 
+        //telemetry define
         telemetry.addData("lift motor pos", lift.getCurrentPosition());
         telemetry.addData("left stick X position", gamepad1.left_stick_x);
         telemetry.addData("left front power", leftFrontPower);
-        telemetry.addData("This is before the move loop", "It sets x+y by the movement of the joysticks");
+
+        telemetry.addData("ArmHight", liftpos);
+
 
         if (!!cooldown) {
             try {
@@ -110,8 +122,9 @@ public class SimpleDrive extends OpMode {
         }
 
 
+        //telemetry update
         telemetry.update();
-
+            //endgame timer
             if ((runtime.seconds() > Endgame) && !secondHalf)  {
                 gamepad1.runRumbleEffect(customRumbleEffect);
                 gamepad2.runRumbleEffect(customRumbleEffect);
@@ -141,7 +154,7 @@ public class SimpleDrive extends OpMode {
 
 
 
-
+//movement code
         if(gamepad1.left_stick_y >= 0.1 && gamepad1.right_stick_x <= -0.1){
             rightFrontPower = 0.8;
             rightBackPower = 0.8;
@@ -156,6 +169,7 @@ public class SimpleDrive extends OpMode {
             rightBackPower = -0.8;
         }
 
+        //custom up arm
         if (gamepad2.dpad_right && liftpos <=450) {
             liftpos = lift.getCurrentPosition();
             liftpos += 36;
@@ -165,7 +179,9 @@ public class SimpleDrive extends OpMode {
 
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
-        else if (gamepad2.dpad_left && liftpos < 0) {
+
+        //custom down arm
+        else if (gamepad2.dpad_left && liftpos > 0) {
 
             liftpos = lift.getCurrentPosition();
             liftpos -= 36;
@@ -176,7 +192,7 @@ public class SimpleDrive extends OpMode {
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
 
-        //using for button
+        //slow movement
         if (gamepad1.right_bumper)
         {
             leftFrontPower /= 3;
@@ -185,6 +201,7 @@ public class SimpleDrive extends OpMode {
             rightBackPower /= 3;
         }
 
+        //slowest movement
         if (gamepad1.left_bumper)
         {
             leftFrontPower /= 2;
@@ -193,26 +210,34 @@ public class SimpleDrive extends OpMode {
             rightBackPower /= 2;
         }
 
+
+        //this is med pole
         if (gamepad2.a)
         {
             lift.setTargetPosition(270);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             lift.setPower(0.1);
         }
-//
+
+
+        //this is low pole
         if (gamepad2.b)
         {
             lift.setTargetPosition(430);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             lift.setPower(0.1);
         }
-//        if (gamepad2.x)
-//        {
-//            lift.setTargetPosition(60);
-//            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//            lift.setPower(0.2);
-//        }
-//
+
+
+        //this is ground junction
+        if (gamepad2.x)
+        {
+            lift.setTargetPosition(50);
+            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            lift.setPower(0.2);
+        }
+
+        //sets arm too 0.12511238294583
         if (gamepad2.dpad_down)
         {
             lift.setTargetPosition(0);
@@ -222,25 +247,21 @@ public class SimpleDrive extends OpMode {
 
 
 
-        //this is what i changed
+        //claw close
         if(gamepad2.left_bumper){
             Claw.setPosition(0.0);
         }
+        //claw open
         else if(gamepad2.right_bumper){
             Claw.setPosition(0.35);
         }
         //else if(!gamepad1.a) changed = false;
 
+        //custom rumble effect
         if(gamepad1.x)
         {
             gamepad1.runRumbleEffect(customRumbleEffect2);
         }
-
-
-
-
-
-
 
 
 
@@ -255,6 +276,7 @@ public class SimpleDrive extends OpMode {
     @Override
     public void stop()
     {
+        // when stop is activated it stops
         leftFrontDrive.setPower(0);
         rightFrontDrive.setPower(0);
         leftBackDrive.setPower(0);
@@ -263,8 +285,3 @@ public class SimpleDrive extends OpMode {
     }
 
 }
-
-/** SHREK IS KINDA GOOD AT LIFE!!!
- * CAUSE SHREK. . . IS BETTTTTER!!!!!
- * LIFE IS EASIER FOR SHREK!!!!
- */
