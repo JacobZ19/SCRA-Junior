@@ -23,7 +23,10 @@ public class AutoDrive {
     public final int BACKWARD = 2;
     public final int STRAFELEFT = 3;
     public final int STRAFERIGHT = 4;
-    DcMotor rightFrontDrive,rightBackDrive, leftFrontDrive, leftBackDrive;
+    DcMotor rightFrontDrive;
+    DcMotor rightBackDrive;
+    DcMotor leftFrontDrive;
+    DcMotor leftBackDrive;
 
     public void initHardwareMap()
     {

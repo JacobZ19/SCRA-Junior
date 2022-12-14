@@ -19,14 +19,24 @@
  * SOFTWARE.
  */
 
+/** //////  ////   ////     IN ALBERTA!!!
+ *       /  /   /  /   /
+ *  //////  ////   /   /
+ *       /  / /    /   /
+ *  //////  /  /   ////
+ */
 package org.firstinspires.ftc.teamcode.auton;
 
 // Work by Kallen and Aaron 22092
 
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.SimpleDrive;
 import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
@@ -36,7 +46,7 @@ import org.firstinspires.ftc.teamcode.auton.AutoDrive;
 import java.util.ArrayList;
 
 // This is partially 22092 cyber eagles jade work
-// You may only use this code over cyber eagles jade consent
+// You may only use this code over cyber eagles jade consent and FTC consent
 
 @Autonomous(name="Autonomous Code Red")
 
@@ -46,7 +56,8 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
 
     static final double FEET_PER_METER = 3.28084;
-
+    private DcMotor lift = null;
+    public float liftpos;
     double fx = 578.272;
     double fy = 578.272;
     double cx = 402.145;
@@ -58,12 +69,18 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
     int MIDDLE = 2;
     int RIGHT = 3;
 
+
     AprilTagDetection tagOfInterest = null;
     AutoDrive robot = new AutoDrive(this);
+    SimpleDrive robot1 = new SimpleDrive(this);
 
     @Override
     public void runOpMode()
     {
+        lift = hardwareMap.get(DcMotor.class,"Lift");
+        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        lift.setDirection(DcMotorSimple.Direction.REVERSE);
         robot.initHardwareMap();
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
@@ -160,17 +177,21 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
             robot.drive(1300, -0.5, robot.STRAFELEFT);
             robot.drive(200, 0.5, robot.STRAFELEFT);
             robot.drive(800, 0.5, robot.FORWARD);
-            robot.drive(1300, 0.5, robot.STRAFELEFT);
+            robot.drive(1000, 0.5, robot.STRAFELEFT);
 
 
         }
         else if(tagOfInterest.id == MIDDLE) {
             tag_number = 2;
-            robot.drive(1300, 0.5, robot.STRAFELEFT);
-            robot.drive(1300, -0.5, robot.STRAFELEFT);
-            robot.drive(160, 0.5, robot.STRAFELEFT);
-            sleep(1000);
+            lift.setTargetPosition(430);
+            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            lift.setPower(0.1);
             robot.drive(740, 0.5, robot.FORWARD);
+            sleep(500);
+            robot1.Update.rightBackDrive = 0.8;
+            rightBackPower = 0.8;
+            leftFrontPower = -0.8;
+            leftBackPower = -0.8;
         }
 
         else if(tagOfInterest.id == RIGHT){
@@ -181,6 +202,7 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
             sleep(1000);
             robot.drive(740, 0.5, robot.FORWARD);
         }
+
         else{
             sleep(600000);
     }

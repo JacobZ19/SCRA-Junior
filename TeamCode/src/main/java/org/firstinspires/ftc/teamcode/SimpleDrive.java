@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -14,6 +15,7 @@ import com.qualcomm.robotcore.util.Range;
 
 public class SimpleDrive extends OpMode {
 
+    LinearOpMode opMode = null;
     //sets all other varables
     boolean secondHalf = false;
     boolean LastCall = false;
@@ -25,6 +27,9 @@ public class SimpleDrive extends OpMode {
     public Servo Claw = null;
     public final static double ClawHome = 0.0;
     public float liftpos;
+    public SimpleDrive(LinearOpMode opMode){
+        this.opMode= opMode;
+    }
 
     //rumble effects
     Gamepad.RumbleEffect customRumbleEffect;
@@ -232,7 +237,7 @@ public class SimpleDrive extends OpMode {
         //this is ground junction
         if (gamepad2.x)
         {
-            lift.setTargetPosition(50);
+            lift.setTargetPosition(20);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             lift.setPower(0.2);
         }
