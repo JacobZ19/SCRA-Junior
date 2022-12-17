@@ -183,15 +183,11 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
         }
         else if(tagOfInterest.id == MIDDLE) {
             tag_number = 2;
-            lift.setTargetPosition(430);
-            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            lift.setPower(0.1);
+            robot.drive(1300, 0.5, robot.STRAFELEFT);
+            robot.drive(1300, -0.5, robot.STRAFELEFT);
+            robot.drive(100, 0.5, robot.STRAFELEFT);
+            sleep(1000);
             robot.drive(740, 0.5, robot.FORWARD);
-            sleep(500);
-            robot1.Update.rightBackDrive = 0.8;
-            rightBackPower = 0.8;
-            leftFrontPower = -0.8;
-            leftBackPower = -0.8;
         }
 
         else if(tagOfInterest.id == RIGHT){
