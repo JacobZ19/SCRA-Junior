@@ -72,7 +72,7 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
 
     AprilTagDetection tagOfInterest = null;
     AutoDrive robot = new AutoDrive(this);
-    SimpleDrive robot1 = new SimpleDrive(this);
+    //SimpleDrive robot1 = new SimpleDrive(this);
 
     @Override
     public void runOpMode()

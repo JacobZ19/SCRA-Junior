@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -15,7 +14,7 @@ import com.qualcomm.robotcore.util.Range;
 
 public class SimpleDrive extends OpMode {
 
-    LinearOpMode opMode = null;
+
     //sets all other varables
     boolean secondHalf = false;
     boolean LastCall = false;
@@ -27,9 +26,6 @@ public class SimpleDrive extends OpMode {
     public Servo Claw = null;
     public final static double ClawHome = 0.0;
     public float liftpos;
-    public SimpleDrive(LinearOpMode opMode){
-        this.opMode= opMode;
-    }
 
     //rumble effects
     Gamepad.RumbleEffect customRumbleEffect;
@@ -45,13 +41,13 @@ public class SimpleDrive extends OpMode {
     @Override
     public void init()
     {
-        //custom rumble effect
-        customRumbleEffect = new Gamepad.RumbleEffect.Builder()
-                .addStep(1.0, 1.0, 500)
-                .build();
-        customRumbleEffect2 = new Gamepad.RumbleEffect.Builder()
-                .addStep(1.0, 1.0, 1000)
-                .build();
+//        //custom rumble effect
+//        customRumbleEffect = new Gamepad.RumbleEffect.Builder()
+//                .addStep(1.0, 1.0, 500)
+//                .build();
+//        customRumbleEffect2 = new Gamepad.RumbleEffect.Builder()
+//                .addStep(1.0, 1.0, 1000)
+//                .build();
 
         //tells you to press start
         telemetry.addData(">", "Press Start");
@@ -75,7 +71,7 @@ public class SimpleDrive extends OpMode {
         leftBackDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         rightBackDrive.setDirection(DcMotorSimple.Direction.FORWARD);
 
-        lift.setDirection(DcMotorSimple.Direction.REVERSE);
+        lift.setDirection(DcMotorSimple.Direction.FORWARD);
     }
 
     @Override
@@ -177,10 +173,10 @@ public class SimpleDrive extends OpMode {
         //custom up arm
         if (gamepad2.dpad_right && liftpos <=450) {
             liftpos = lift.getCurrentPosition();
-            liftpos += 36;
+            liftpos += 1;
             lift.setTargetPosition((int) liftpos);
 
-            lift.setPower(0.2);
+            lift.setPower(0.05);
 
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
@@ -189,10 +185,10 @@ public class SimpleDrive extends OpMode {
         else if (gamepad2.dpad_left && liftpos > 0) {
 
             liftpos = lift.getCurrentPosition();
-            liftpos -= 36;
+            liftpos -= 1;
             lift.setTargetPosition((int) liftpos);
 
-            lift.setPower(0.2);
+            lift.setPower(0.05);
 
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
