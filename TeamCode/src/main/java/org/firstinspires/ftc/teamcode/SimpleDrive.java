@@ -171,12 +171,12 @@ public class SimpleDrive extends OpMode {
         }
 
         //custom up arm
-        if (gamepad2.dpad_right && liftpos <=450) {
+        if (gamepad2.dpad_right && liftpos <=370) {
             liftpos = lift.getCurrentPosition();
-            liftpos += 1.5;
+            liftpos += 24;
             lift.setTargetPosition((int) liftpos);
 
-            lift.setPower(0.01);
+            lift.setPower(0.13);
 
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
@@ -185,10 +185,10 @@ public class SimpleDrive extends OpMode {
         else if (gamepad2.dpad_left && liftpos > 0) {
 
             liftpos = lift.getCurrentPosition();
-            liftpos -= 1.5;
+            liftpos -= 24;
             lift.setTargetPosition((int) liftpos);
 
-            lift.setPower(0.01);
+            lift.setPower(0.13);
 
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
@@ -215,18 +215,25 @@ public class SimpleDrive extends OpMode {
         //this is med pole
         if (gamepad2.a)
         {
-            lift.setTargetPosition(270);
+            lift.setTargetPosition(140);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            lift.setPower(0.1);
+            lift.setPower(0.13);
         }
 
 
         //this is low pole
         if (gamepad2.b)
         {
-            lift.setTargetPosition(430);
+            lift.setTargetPosition(230);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            lift.setPower(0.1);
+            lift.setPower(0.13);
+        }
+
+        if (gamepad2.y)
+        {
+            lift.setTargetPosition(370);
+            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            lift.setPower(0.13);
         }
 
 
@@ -235,7 +242,7 @@ public class SimpleDrive extends OpMode {
         {
             lift.setTargetPosition(20);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            lift.setPower(0.2);
+            lift.setPower(0.13);
         }
 
         //sets arm too 0.12511238294583
@@ -243,7 +250,7 @@ public class SimpleDrive extends OpMode {
         {
             lift.setTargetPosition(0);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            lift.setPower(0.12511238294583);
+            lift.setPower(0.1);
         }
 
 
