@@ -173,10 +173,10 @@ public class SimpleDrive extends OpMode {
         //custom up arm
         if (gamepad2.dpad_right && liftpos <=450) {
             liftpos = lift.getCurrentPosition();
-            liftpos += 1;
+            liftpos += 1.5;
             lift.setTargetPosition((int) liftpos);
 
-            lift.setPower(0.05);
+            lift.setPower(0.01);
 
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
@@ -185,10 +185,10 @@ public class SimpleDrive extends OpMode {
         else if (gamepad2.dpad_left && liftpos > 0) {
 
             liftpos = lift.getCurrentPosition();
-            liftpos -= 1;
+            liftpos -= 1.5;
             lift.setTargetPosition((int) liftpos);
 
-            lift.setPower(0.05);
+            lift.setPower(0.01);
 
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
