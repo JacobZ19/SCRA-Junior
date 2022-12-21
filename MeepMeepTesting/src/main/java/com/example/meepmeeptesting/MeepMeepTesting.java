@@ -31,8 +31,8 @@ public class MeepMeepTesting {
                                 .build()
                 );
 
-        meepMeep.setBackground(MeepMeep.Background.FIELD_FREIGHTFRENZY_OFFICIAL)
-                .setDarkMode(true)
+        meepMeep.setBackground(MeepMeep.Background.FIELD_POWERPLAY_OFFICIAL)
+                .setDarkMode(false)
                 .setBackgroundAlpha(0.95f)
                 .addEntity(myBot)
                 .start();
