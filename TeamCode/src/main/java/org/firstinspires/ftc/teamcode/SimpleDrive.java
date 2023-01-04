@@ -215,7 +215,7 @@ public class SimpleDrive extends OpMode {
         //this is med pole
         if (gamepad2.a)
         {
-            lift.setTargetPosition(140);
+            lift.setTargetPosition(400);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             lift.setPower(0.13);
         }
@@ -224,14 +224,14 @@ public class SimpleDrive extends OpMode {
         //this is low pole
         if (gamepad2.b)
         {
-            lift.setTargetPosition(230);
+            lift.setTargetPosition(650);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             lift.setPower(0.13);
         }
 
         if (gamepad2.y)
         {
-            lift.setTargetPosition(370);
+            lift.setTargetPosition(1010);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             lift.setPower(0.13);
         }
@@ -240,7 +240,7 @@ public class SimpleDrive extends OpMode {
         //this is ground junction
         if (gamepad2.x)
         {
-            lift.setTargetPosition(20);
+            lift.setTargetPosition(95);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             lift.setPower(0.13);
         }
