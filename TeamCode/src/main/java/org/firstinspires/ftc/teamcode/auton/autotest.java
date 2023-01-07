@@ -19,15 +19,24 @@
  * SOFTWARE.
  */
 
+/** //////  ////   ////     IN ALBERTA!!!
+ *       /  /   /  /   /
+ *  //////  ////   /   /
+ *       /  / /    /   /
+ *  //////  /  /   ////
+ */
 package org.firstinspires.ftc.teamcode.auton;
 
 // Work by Kallen and Aaron 22092
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.SimpleDrive;
 import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
@@ -37,18 +46,18 @@ import org.firstinspires.ftc.teamcode.auton.AutoDrive;
 import java.util.ArrayList;
 
 // This is partially 22092 cyber eagles jade work
-// You may only use this code over cyber eagles jade consent
+// You may only use this code over cyber eagles jade consent and FTC consent
 
-@Disabled
-@Autonomous(name="Autonomous Code Blue")
+@Autonomous(name="Auto Test RIGHT")
 
-public class AprilTagAutonomousInitDetectionExampleBlue extends LinearOpMode
+public class autotest extends LinearOpMode
 {
     OpenCvCamera camera;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
 
     static final double FEET_PER_METER = 3.28084;
-
+    private DcMotor lift = null;
+    public float liftpos;
     double fx = 578.272;
     double fy = 578.272;
     double cx = 402.145;
@@ -60,12 +69,18 @@ public class AprilTagAutonomousInitDetectionExampleBlue extends LinearOpMode
     int MIDDLE = 2;
     int RIGHT = 3;
 
+
     AprilTagDetection tagOfInterest = null;
     AutoDrive robot = new AutoDrive(this);
+
 
     @Override
     public void runOpMode()
     {
+        lift = hardwareMap.get(DcMotor.class,"Lift");
+        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        lift.setDirection(DcMotorSimple.Direction.REVERSE);
         robot.initHardwareMap();
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
@@ -156,30 +171,37 @@ public class AprilTagAutonomousInitDetectionExampleBlue extends LinearOpMode
             telemetry.update();
         }
 
-        if(tagOfInterest == null || tagOfInterest.id == RIGHT){
-            tag_number = 3;
-            robot.drive(1300, -0.5, robot.STRAFELEFT);
-            robot.drive(1300, 0.5, robot.STRAFELEFT);
-            robot.drive(200, -0.5, robot.STRAFELEFT);
-            robot.drive(800, 0.5, robot.FORWARD);
-            robot.drive(1000, -0.5, robot.STRAFELEFT);
-        }
-        else if(tagOfInterest.id == MIDDLE){
-            tag_number = 2;
-            robot.drive(1300, -0.5, robot.STRAFELEFT);
-            robot.drive(1300, 0.5, robot.STRAFELEFT);
-            robot.drive(100, -0.5, robot.STRAFELEFT);
-            sleep(1000);
-            robot.drive(740, 0.5, robot.FORWARD);
-        }
-        else if(tagOfInterest.id == LEFT){
+        robot.drive(5, 0.33333f, robot.CLAWOPEN);
+        sleep(500);
+        robot.drive(5, 0.33333f, robot.CLAWCLOSE);
+        sleep(500);
+        robot.drive(5,0.11111f, robot.ARMUP2);
+        robot.drive(700, 0.5, robot.FORWARD);
+        sleep(5000);
+        robot.drive(650, 0.25, robot.LEFTTURN);
+        sleep(500);
+        sleep(500);
+        robot.drive(5, 0.333333f, robot.CLAWOPEN);
+        sleep(500);
+        robot.drive(650, 0.25, robot.RIGHTTURN);
+        robot.drive(5, 0.111111f, robot.ARMDOWN);
+        sleep(5000);
+
+        if(tagOfInterest == null || tagOfInterest.id == LEFT){
             tag_number = 1;
-            robot.drive(1300, -0.5, robot.STRAFELEFT);
-            robot.drive(1300, 0.5, robot.STRAFELEFT);
-            robot.drive(820, -0.5, robot.STRAFERIGHT);
-            sleep(1000);
-            robot.drive(740, 0.5, robot.FORWARD);
+            robot.drive(1000, 0.5, robot.STRAFELEFT);
+
         }
+        else if(tagOfInterest.id == MIDDLE) {
+            tag_number = 2;
+
+        }
+
+        else if(tagOfInterest.id == RIGHT){
+            tag_number = 3;
+            robot.drive(1600, 0.5, robot.STRAFERIGHT);
+        }
+
         else{
             sleep(600000);
         }

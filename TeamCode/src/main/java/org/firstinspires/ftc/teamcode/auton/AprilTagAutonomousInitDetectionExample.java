@@ -29,7 +29,7 @@ package org.firstinspires.ftc.teamcode.auton;
 
 // Work by Kallen and Aaron 22092
 
-
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -47,7 +47,7 @@ import java.util.ArrayList;
 
 // This is partially 22092 cyber eagles jade work
 // You may only use this code over cyber eagles jade consent and FTC consent
-
+@Disabled
 @Autonomous(name="Autonomous Code Red")
 
 public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
@@ -177,7 +177,6 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
             robot.drive(1300, -0.5, robot.STRAFELEFT);
             robot.drive(200, 0.5, robot.STRAFELEFT);
             robot.drive(800, 0.5, robot.FORWARD);
-            robot.drive(1000, 0.5, robot.STRAFELEFT);
 
 
         }
