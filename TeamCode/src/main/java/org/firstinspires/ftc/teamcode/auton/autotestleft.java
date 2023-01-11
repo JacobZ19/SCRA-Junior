@@ -19,19 +19,7 @@
  * SOFTWARE.
  */
 
-/** //////  ////   ////     IN ALBERTA!!!
- *       /  /   /  /   /
- *  //////  ////   /   /
- *       /  / /    /   /
- *  //////  /  /   ////
- */
-
-//WORKING ONE!!!
-
 package org.firstinspires.ftc.teamcode.auton;
-
-// Work by Kallen and Aaron 22092
-
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -39,17 +27,11 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.SimpleDrive;
 import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
-import org.openftc.easyopencv.OpenCvInternalCamera;
-import org.firstinspires.ftc.teamcode.auton.AutoDrive;
 import java.util.ArrayList;
-
-// This is partially 22092 cyber eagles jade work
-// You may only use this code over cyber eagles jade consent and FTC consent
 
 @Autonomous(name="Auto Test LEFT")
 

@@ -1,4 +1,3 @@
-//Useless
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -10,46 +9,53 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
+@TeleOp
 
 public class SpinbotTeleOp extends OpMode {
+
+
+    //sets all other varables
     boolean secondHalf = false;
     boolean LastCall = false;
     private DcMotor leftFrontDrive = null;
     private DcMotor rightFrontDrive = null;
     private DcMotor leftBackDrive = null;
     private DcMotor rightBackDrive = null;
+    private DcMotor turret = null;
     private DcMotor lift = null;
     public Servo Claw = null;
     public final static double ClawHome = 0.0;
     public float liftpos;
-    public boolean good;
 
+    //rumble effects
     Gamepad.RumbleEffect customRumbleEffect;
     Gamepad.RumbleEffect customRumbleEffect2;
     ElapsedTime runtime = new ElapsedTime();
 
+    //endgame timers
     final double Endgame = 80.0;
     final double EndofGame = 110.0;
 
-    @Override
-    public void init() {
-        customRumbleEffect = new Gamepad.RumbleEffect.Builder()
-                .addStep(1.0, 1.0, 500)
-                .build();
-        customRumbleEffect2 = new Gamepad.RumbleEffect.Builder()
-                .addStep(1.0, 1.0, 1000)
-                .build();
 
+
+    @Override
+    public void init()
+    {
+        //tells you to press start
         telemetry.addData(">", "Press Start");
         telemetry.update();
+
+        //finds the DCMOTORS
         leftFrontDrive = hardwareMap.get(DcMotor.class, "left_front");
         rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front");
         leftBackDrive = hardwareMap.get(DcMotor.class, "left_back");
         rightBackDrive = hardwareMap.get(DcMotor.class, "right_back");
+        turret = hardwareMap.get(DcMotor.class, "turret");
         Claw = hardwareMap.get(Servo.class, "Claw");
-        lift = hardwareMap.get(DcMotor.class, "Lift");
+        lift = hardwareMap.get(DcMotor.class,"Lift");
         Claw.setPosition(ClawHome);
 
+        //resets and sets lift and drive motions
         lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
@@ -58,80 +64,99 @@ public class SpinbotTeleOp extends OpMode {
         leftBackDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         rightBackDrive.setDirection(DcMotorSimple.Direction.FORWARD);
 
-        lift.setDirection(DcMotorSimple.Direction.REVERSE);
+        lift.setDirection(DcMotorSimple.Direction.FORWARD);
+
+
+        turret.setDirection(DcMotorSimple.Direction.FORWARD);
     }
 
     @Override
     public void start() {
-        good =true;
-        while (good) {
-            if ((runtime.seconds() > Endgame) && !secondHalf)  {
-                gamepad1.runRumbleEffect(customRumbleEffect);
-                gamepad2.runRumbleEffect(customRumbleEffect);
-                secondHalf =true;
-            }
 
-            if (!secondHalf) {
-                telemetry.addData(">", "Endgame Countdown \n", (Endgame - runtime.seconds()) );
-            }
-            if ((runtime.seconds() > EndofGame) && !LastCall) {
-                gamepad1.runRumbleEffect(customRumbleEffect2);
-                gamepad2.runRumbleEffect(customRumbleEffect2);
-                LastCall =true;
-            }
-
-            if (!LastCall) {
-                telemetry.addData(">", "END COUNTDOWN \n", (EndofGame - runtime.seconds()) );
-            }
-            else{
-                telemetry.addLine("GET TO THE TERMINAL!!!");
-                good =false;
-            }
-            telemetry.update();
-        }
     }
+
 
 
     @Override
     public void loop() {
+        //sets most drive things
         boolean cooldown = false;
         double leftFrontPower;
         double leftBackPower;
         double rightFrontPower;
         double rightBackPower;
+        double turretpower;
         runtime.reset();
+        boolean started = true;
 
 
+        //set drive controls
         double drive = -gamepad1.left_stick_y;
         double strafe = gamepad1.left_stick_x;
         double turn = gamepad1.right_stick_x;
+        double turretleft = gamepad2.left_trigger;
+        double turretright = gamepad2.right_trigger;
 
-
-        leftFrontPower = Range.clip(drive + turn + strafe, -0.5, 0.5);
+        //set moter power
+        leftFrontPower = Range.clip(drive+ turn + strafe, -0.5, 0.5);
         rightFrontPower = Range.clip(drive - turn - strafe, -0.5, 0.5);
         leftBackPower = Range.clip(drive + turn - strafe, -0.5, 0.5);
         rightBackPower = Range.clip(drive - turn + strafe, -0.5, 0.5);
+        turretpower = Range.clip(turretleft / 10, -0.5, 0.5);
+        turretpower = Range.clip(-turretright / 10, -0.5, 0.5);
 
 
+        //telemetry define
         telemetry.addData("lift motor pos", lift.getCurrentPosition());
         telemetry.addData("left stick X position", gamepad1.left_stick_x);
-        telemetry.addData("left stick Y position", gamepad1.left_stick_y);
         telemetry.addData("left front power", leftFrontPower);
-        telemetry.addData("right front power", rightFrontPower);
-        telemetry.addData("left back power", leftBackPower);
-        telemetry.addData("right back power", rightBackPower);
+
+        telemetry.addData("ArmHight", liftpos);
+
 
         if (!!cooldown) {
             try {
-                wait(1/3);
+                wait(2);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            cooldown = true;
+            cooldown = false;
         }
 
-        telemetry.update();
 
+        //telemetry update
+        telemetry.update();
+        //endgame timer
+        if ((runtime.seconds() > Endgame) && !secondHalf)  {
+            gamepad1.runRumbleEffect(customRumbleEffect);
+            gamepad2.runRumbleEffect(customRumbleEffect);
+            secondHalf =true;
+            gamepad1.rumbleBlips(3);
+        }
+
+        if (!secondHalf) {
+            telemetry.addData(">", "Endgame Countdown \n", (Endgame - runtime.seconds()) );
+        }
+        if ((runtime.seconds() > EndofGame) && !LastCall) {
+            gamepad1.runRumbleEffect(customRumbleEffect2);
+            gamepad2.runRumbleEffect(customRumbleEffect2);
+            LastCall =true;
+            gamepad1.rumbleBlips(3);
+        }
+
+        if (!LastCall) {
+            telemetry.addData(">", "END COUNTDOWN \n", (EndofGame - runtime.seconds()) );
+        }
+        else{
+            telemetry.addLine("GET TO THE TERMINAL!!!");
+            telemetry.addLine("GET TO THE TERMINAL!!!");
+            telemetry.addLine("GET TO THE TERMINAL!!!");
+            telemetry.addLine("GET TO THE TERMINAL!!!");
+        }
+
+
+
+//movement code
         if(gamepad1.left_stick_y >= 0.1 && gamepad1.right_stick_x <= -0.1){
             rightFrontPower = 0.8;
             rightBackPower = 0.8;
@@ -145,6 +170,39 @@ public class SpinbotTeleOp extends OpMode {
             rightFrontPower = -0.8;
             rightBackPower = -0.8;
         }
+
+        if(gamepad2.left_trigger >= 0.1){
+            turretpower = 0.8;
+        }
+
+        else if(gamepad2.right_trigger >= 0.1){
+            turretpower = 0.8;
+        }
+
+        //custom up arm
+        if (gamepad2.dpad_right && liftpos <=370) {
+            liftpos = lift.getCurrentPosition();
+            liftpos += 24;
+            lift.setTargetPosition((int) liftpos);
+
+            lift.setPower(0.13);
+
+            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        }
+
+        //custom down arm
+        else if (gamepad2.dpad_left && liftpos > 0) {
+
+            liftpos = lift.getCurrentPosition();
+            liftpos -= 24;
+            lift.setTargetPosition((int) liftpos);
+
+            lift.setPower(0.13);
+
+            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        }
+
+        //slow movement
         if (gamepad1.right_bumper)
         {
             leftFrontPower /= 3;
@@ -153,6 +211,7 @@ public class SpinbotTeleOp extends OpMode {
             rightBackPower /= 3;
         }
 
+        //slowest movement
         if (gamepad1.left_bumper)
         {
             leftFrontPower /= 2;
@@ -161,69 +220,89 @@ public class SpinbotTeleOp extends OpMode {
             rightBackPower /= 2;
         }
 
+
+        //this is med pole
         if (gamepad2.a)
         {
-            lift.setTargetPosition(280);
+            lift.setTargetPosition(425);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            lift.setPower(0.1);
+            lift.setPower(0.13);
         }
 
+
+        //this is low pole
         if (gamepad2.b)
         {
-            lift.setTargetPosition(440);
+            lift.setTargetPosition(685);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            lift.setPower(0.1);
-        }
-        if (gamepad2.x)
-        {
-            lift.setTargetPosition(60);
-            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            lift.setPower(0.2);
+            lift.setPower(0.13);
         }
 
+        if (gamepad2.y)
+        {
+            lift.setTargetPosition(1035);
+            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            lift.setPower(0.13);
+        }
+
+
+        //this is ground junction
+        if (gamepad2.x)
+        {
+            lift.setTargetPosition(120);
+            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            lift.setPower(0.13);
+        }
+
+        //sets arm too 0.12511238294583
         if (gamepad2.dpad_down)
         {
             lift.setTargetPosition(0);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            lift.setPower(0.12511238294583);
-        }
-
-        if (gamepad2.dpad_right && liftpos <=450) {
-            liftpos = lift.getCurrentPosition();
-            liftpos += 6;
-            lift.setTargetPosition((int) liftpos);
-            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             lift.setPower(0.1);
         }
-        else if (gamepad2.dpad_left && liftpos >=-2) {
 
-            liftpos = lift.getCurrentPosition();
-            liftpos -= 6;
-            lift.setTargetPosition((int) liftpos);
-            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            lift.setPower(0.1);
 
-            if(gamepad2.left_bumper){
-                Claw.setPosition(0.0);
-            }
-            else if(gamepad2.right_bumper){
-                Claw.setPosition(0.35);
-            }
-            leftFrontDrive.setPower((leftFrontPower));
-            rightFrontDrive.setPower((rightFrontPower));
-            leftBackDrive.setPower((leftBackPower));
-            rightBackDrive.setPower((rightBackPower));
 
+        //claw close
+        if(gamepad2.left_bumper){
+            Claw.setPosition(0.0);
         }
+        //claw open
+        else if(gamepad2.right_bumper){
+            Claw.setPosition(0.35);
+        }
+        //else if(!gamepad1.a) changed = false;
+
+        //custom rumble effect
+        if(gamepad1.x)
+        {
+            gamepad1.runRumbleEffect(customRumbleEffect2);
+        }
+
+
+
+
+        leftFrontDrive.setPower((leftFrontPower));
+        rightFrontDrive.setPower((rightFrontPower));
+        leftBackDrive.setPower((leftBackPower));
+        rightBackDrive.setPower((rightBackPower));
+        turret.setPower((turretpower));
 
     }
+
+
+
     @Override
     public void stop()
     {
+        // when stop is activated it stops
         leftFrontDrive.setPower(0);
         rightFrontDrive.setPower(0);
         leftBackDrive.setPower(0);
         rightBackDrive.setPower(0);
         lift.setPower(0);
+        turret.setPower(0);
     }
+
 }
