@@ -246,6 +246,7 @@ public class SpinbotTeleOp extends OpMode {
             lift.setTargetPosition(310);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             lift.setPower(0.08);
+
             turret.setTargetPosition(0);
             turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             if (turretpos > 0) {
