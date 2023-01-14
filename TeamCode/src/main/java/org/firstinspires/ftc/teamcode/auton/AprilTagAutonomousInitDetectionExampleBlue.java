@@ -41,7 +41,7 @@ import java.util.ArrayList;
 
 @Disabled
 @Autonomous(name="Autonomous Code Blue")
-
+//hi
 public class AprilTagAutonomousInitDetectionExampleBlue extends LinearOpMode
 {
     OpenCvCamera camera;

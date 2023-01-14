@@ -110,7 +110,7 @@ public class SimpleDrive extends OpMode {
         telemetry.addData("left front power", leftFrontPower);
 
         telemetry.addData("ArmHight", liftpos);
-
+//hi
 
         if (!!cooldown) {
             try {

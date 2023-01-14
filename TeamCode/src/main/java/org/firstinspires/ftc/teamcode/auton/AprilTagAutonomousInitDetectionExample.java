@@ -49,7 +49,7 @@ import java.util.ArrayList;
 // You may only use this code over cyber eagles jade consent and FTC consent
 @Disabled
 @Autonomous(name="Autonomous Code Red")
-
+//hi
 public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
 {
     OpenCvCamera camera;

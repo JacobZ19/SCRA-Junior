@@ -225,7 +225,7 @@ public class SpinbotTeleOp extends OpMode {
             lift.setPower(0.1);
         }
 
-
+//hi
 
         //claw close
         if(gamepad2.left_bumper){

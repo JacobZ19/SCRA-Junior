@@ -204,7 +204,7 @@ public class autotest extends LinearOpMode
             tag_number = 3;
             robot.drive(1600, 0.5, robot.STRAFERIGHT);
         }
-
+//hi
         else{
             sleep(600000);
         }

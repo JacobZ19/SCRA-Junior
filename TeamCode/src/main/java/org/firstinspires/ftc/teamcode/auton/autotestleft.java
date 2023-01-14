@@ -175,7 +175,7 @@ public class autotestleft extends LinearOpMode
         robot.drive(5, 0.111111f, robot.ARMDOWN);
         sleep(4000);
 
-
+//hi
         if(tagOfInterest == null || tagOfInterest.id == LEFT){
             tag_number = 1;
             robot.drive(3000, 0.25, robot.STRAFELEFT);
