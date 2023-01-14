@@ -242,6 +242,27 @@ public class SpinbotTeleOp extends OpMode {
         leftBackDrive.setPower((leftBackPower));
         rightBackDrive.setPower((rightBackPower));
 
+        if(gamepad1.share && gamepad2.share) {
+            if (turretpos != 0) {
+                lift.setTargetPosition(310);
+                lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                lift.setPower(0.08);
+                sleep(100000);
+                turret.setTargetPosition(0);
+                turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                if (turretpos > 0) {
+                    turret.setPower(-0.05);
+                } else if (turretpos < 0) {
+                    turret.setPower(0.05);
+                }
+                sleep(10000);
+                lift.setTargetPosition(0);
+                lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                lift.setPower(0.1);
+                sleep(10000);
+            }
+        }
+
     }
 
 
