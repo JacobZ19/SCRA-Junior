@@ -106,33 +106,33 @@ public class SpinbotTeleOp extends OpMode {
 
 //movement code
         if(gamepad1.left_stick_y >= 0.1 && gamepad1.right_stick_x <= -0.1){
-            rightFrontPower = 0.8;
-            rightBackPower = 0.8;
-            leftFrontPower = -0.8;
-            leftBackPower = -0.8;
+            rightFrontPower = gamepad1.left_stick_y;
+            rightBackPower = gamepad1.left_stick_y;
+            leftFrontPower = -gamepad1.left_stick_y;
+            leftBackPower = -gamepad1.left_stick_y;
         }
 
         else if(gamepad1.left_stick_y <= -0.1 && gamepad1.right_stick_x <= -0.1){
-            leftFrontPower = 0.8;
-            leftBackPower = 0.8;
-            rightFrontPower = -0.8;
-            rightBackPower = -0.8;
+            leftFrontPower = gamepad1.left_stick_y;
+            leftBackPower = gamepad1.left_stick_y;
+            rightFrontPower = -gamepad1.left_stick_y;
+            rightBackPower = -gamepad1.left_stick_y;
         }
 
-        if(gamepad2.left_trigger >= 0.1 && liftpos >= 200){
+        if(gamepad2.left_trigger >= 0.1 && turretpos >= 200){
             turretpos = turret.getCurrentPosition();
             turretpos -= 10;
-            turret.setTargetPosition((int) liftpos);
+            turret.setTargetPosition((int) turretpos);
             turret.setPower(gamepad2.left_trigger / 20);
-            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
 
-        else if(gamepad2.right_trigger >= 0.1 && liftpos >= 200){
+        else if(gamepad2.right_trigger >= 0.1 && turretpos >= 200){
             turretpos = turret.getCurrentPosition();
             turretpos += 10;
-            turret.setTargetPosition((int) liftpos);
+            turret.setTargetPosition((int) turretpos);
             turret.setPower(gamepad2.right_trigger / 20);
-            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
 
         //custom up arm
