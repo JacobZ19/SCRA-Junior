@@ -171,21 +171,24 @@ public class autotest extends LinearOpMode
             telemetry.update();
         }
 
-        robot.drive(5, 0.33333f, robot.CLAWOPEN);
-        sleep(500);
         robot.drive(5, 0.33333f, robot.CLAWCLOSE);
-        sleep(500);
+        sleep(200);
         robot.drive(5,0.11111f, robot.ARMUP2);
-        robot.drive(700, 0.5, robot.FORWARD);
-        sleep(5000);
-        robot.drive(650, 0.25, robot.LEFTTURN);
-        sleep(500);
-        sleep(500);
+        sleep(2000);
+        robot.drive(1700, 0.25, robot.FORWARD);
+        sleep(2000);
+        robot.drive(690, 0.25, robot.LEFTTURN);
+        sleep(1000);
+        robot.drive(400, 0.25, robot.FORWARD);
+        sleep(1000);
         robot.drive(5, 0.333333f, robot.CLAWOPEN);
         sleep(500);
-        robot.drive(650, 0.25, robot.RIGHTTURN);
+        robot.drive(400, 0.25, robot.BACKWARD);
+        sleep(1000);
+        robot.drive(690, 0.25, robot.RIGHTTURN);
+        robot.drive(1700, 0.25, robot.BACKWARD);
         robot.drive(5, 0.111111f, robot.ARMDOWN);
-        sleep(5000);
+        sleep(4000);
 
         if(tagOfInterest == null || tagOfInterest.id == LEFT){
             tag_number = 1;

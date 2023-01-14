@@ -157,17 +157,21 @@ public class autotestleft extends LinearOpMode
         }
 
         robot.drive(5, 0.33333f, robot.CLAWCLOSE);
-        sleep(500);
+        sleep(200);
         robot.drive(5,0.11111f, robot.ARMUP2);
         sleep(2000);
-        robot.drive(2000, 0.25, robot.FORWARD);
+        robot.drive(1700, 0.25, robot.FORWARD);
         sleep(2000);
-        robot.drive(650, 0.25, robot.RIGHTTURN);
+        robot.drive(690, 0.25, robot.RIGHTTURN);
+        sleep(1000);
+        robot.drive(400, 0.25, robot.FORWARD);
         sleep(1000);
         robot.drive(5, 0.333333f, robot.CLAWOPEN);
         sleep(500);
-        robot.drive(650, 0.25, robot.LEFTTURN);
-        robot.drive(2000, 0.25, robot.BACKWARD);
+        robot.drive(400, 0.25, robot.BACKWARD);
+        sleep(1000);
+        robot.drive(690, 0.25, robot.LEFTTURN);
+        robot.drive(1700, 0.25, robot.BACKWARD);
         robot.drive(5, 0.111111f, robot.ARMDOWN);
         sleep(4000);
 
@@ -181,7 +185,7 @@ public class autotestleft extends LinearOpMode
         else if(tagOfInterest.id == MIDDLE) {
             tag_number = 2;
             robot.drive(100, 0.25, robot.STRAFELEFT);
-            robot.drive(2000, 0.25, robot.FORWARD);
+            robot.drive(1100, 0.5, robot.FORWARD);
 
         }
 

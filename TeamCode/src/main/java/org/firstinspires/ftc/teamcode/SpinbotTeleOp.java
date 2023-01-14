@@ -247,7 +247,7 @@ public class SpinbotTeleOp extends OpMode {
                 lift.setTargetPosition(310);
                 lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 lift.setPower(0.08);
-                sleep(100000);
+                sleep(10000);
                 turret.setTargetPosition(0);
                 turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 if (turretpos > 0) {
@@ -275,25 +275,7 @@ public class SpinbotTeleOp extends OpMode {
         rightFrontDrive.setPower(0);
         leftBackDrive.setPower(0);
         rightBackDrive.setPower(0);
-        if (turretpos != 0) {
-            lift.setTargetPosition(310);
-            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            lift.setPower(0.08);
-            sleep(2000);
-            turret.setTargetPosition(0);
-            turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            if (turretpos > 0) {
-                turret.setPower(-0.05);
-            } else if (turretpos < 0) {
-                turret.setPower(0.05);
-            }
-            sleep(1000);
-            lift.setTargetPosition(0);
-            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            lift.setPower(0.1);
-            sleep(1000);
             lift.setPower(0);
-        }
 
     }
 
