@@ -175,7 +175,7 @@ public class autotest extends LinearOpMode
         sleep(200);
         robot.drive(5,0.11111f, robot.ARMUP2);
         sleep(2000);
-        robot.drive(1700, 0.25, robot.FORWARD);
+        robot.drive(2200, 0.25, robot.FORWARD);
         sleep(2000);
         robot.drive(690, 0.25, robot.LEFTTURN);
         sleep(1000);
@@ -186,23 +186,26 @@ public class autotest extends LinearOpMode
         robot.drive(400, 0.25, robot.BACKWARD);
         sleep(1000);
         robot.drive(690, 0.25, robot.RIGHTTURN);
-        robot.drive(1700, 0.25, robot.BACKWARD);
+        robot.drive(2200, 0.25, robot.BACKWARD);
         robot.drive(5, 0.111111f, robot.ARMDOWN);
         sleep(4000);
 
         if(tagOfInterest == null || tagOfInterest.id == LEFT){
             tag_number = 1;
-            robot.drive(1000, 0.5, robot.STRAFELEFT);
+            robot.drive(2500, 0.25, robot.STRAFELEFT);
+            robot.drive(2000, 0.25, robot.FORWARD);
 
         }
         else if(tagOfInterest.id == MIDDLE) {
             tag_number = 2;
+            robot.drive(1100, 0.5, robot.FORWARD);
 
         }
 
         else if(tagOfInterest.id == RIGHT){
             tag_number = 3;
-            robot.drive(1600, 0.5, robot.STRAFERIGHT);
+            robot.drive(1500, 0.5, robot.STRAFERIGHT);
+            robot.drive(2000, 0.25, robot.FORWARD);
         }
 //hi
         else{

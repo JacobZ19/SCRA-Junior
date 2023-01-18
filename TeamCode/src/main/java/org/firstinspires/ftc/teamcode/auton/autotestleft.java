@@ -156,7 +156,7 @@ public class autotestleft extends LinearOpMode
             telemetry.update();
         }
 
-        robot.drive(5, 0.33333f, robot.CLAWCLOSE);
+        robot.drive(5, 0.233333f, robot.CLAWCLOSE);
         sleep(200);
         robot.drive(5,0.11111f, robot.ARMUP2);
         sleep(2000);
