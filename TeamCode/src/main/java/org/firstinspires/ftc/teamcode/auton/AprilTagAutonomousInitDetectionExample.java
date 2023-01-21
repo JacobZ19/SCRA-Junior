@@ -29,7 +29,26 @@ package org.firstinspires.ftc.teamcode.auton;
 
 // Work by Kallen and Aaron 22092
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+/*
+ * Copyright (c) 2021 OpenFTC Team
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -47,9 +66,9 @@ import java.util.ArrayList;
 
 // This is partially 22092 cyber eagles jade work
 // You may only use this code over cyber eagles jade consent and FTC consent
-@Disabled
-@Autonomous(name="Autonomous Code Red")
-//hi
+
+@Autonomous(name="Thy THICCUST Autonomous")
+
 public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
 {
     OpenCvCamera camera;
@@ -121,7 +140,7 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
 
                 if(tagFound)
                 {
-                    telemetry.addLine("Tag of interest is in sight!\n\nLocation data:");
+                    telemetry.addLine("My eyes work\n\nLocation data:");
                     tagToTelemetry(tagOfInterest);
                 }
                 else
@@ -141,15 +160,15 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
             }
             else
             {
-                telemetry.addLine("Don't see tag of interest :(");
+                telemetry.addLine("Cant see it");
 
                 if(tagOfInterest == null)
                 {
-                    telemetry.addLine("(The tag has never been seen)");
+                    telemetry.addLine("Neva seeeeeen");
                 }
                 else
                 {
-                    telemetry.addLine("\nBut we HAVE seen the tag before; last seen at:");
+                    telemetry.addLine("\nTag Seen Before");
                     tagToTelemetry(tagOfInterest);
                 }
 
@@ -167,26 +186,27 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
         }
         else
         {
-            telemetry.addLine("No tag snapshot available, it was never sighted during the init loop :(");
+            telemetry.addLine("ERROR IN SEEING");
             telemetry.update();
         }
 
         if(tagOfInterest == null || tagOfInterest.id == LEFT){
             tag_number = 1;
+            robot.drive(1700, 0.5, robot.CLAWCLOSE);
+            sleep(500);
             robot.drive(1300, 0.5, robot.STRAFELEFT);
-            robot.drive(1300, -0.5, robot.STRAFELEFT);
-            robot.drive(200, 0.5, robot.STRAFELEFT);
-            robot.drive(800, 0.5, robot.FORWARD);
+            sleep(1000);
+            robot.drive(940, 0.5, robot.FORWARD);
+
 
 
         }
         else if(tagOfInterest.id == MIDDLE) {
             tag_number = 2;
-            lift.setTargetPosition(430);
-            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            lift.setPower(0.1);
-            robot.drive(740, 0.5, robot.FORWARD);
+            robot.drive(1300, 0.5, robot.CLAWCLOSE);
             sleep(500);
+            robot.drive(200, 0.5, robot.STRAFELEFT);
+            robot.drive(500, 0.75, robot.FORWARD);
 //            robot1.Update.rightBackDrive = 0.8;
 //            rightBackPower = 0.8;
 //            leftFrontPower = -0.8;
@@ -195,11 +215,11 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
 
         else if(tagOfInterest.id == RIGHT){
             tag_number = 3;
-            robot.drive(1300, 0.5, robot.STRAFELEFT);
-            robot.drive(1300, -0.5, robot.STRAFELEFT);
-            robot.drive(820, 0.5, robot.STRAFERIGHT);
+            robot.drive(1300, 0.5, robot.CLAWCLOSE);
+            sleep(500);
+            robot.drive(800, 0.5, robot.STRAFERIGHT);
             sleep(1000);
-            robot.drive(740, 0.5, robot.FORWARD);
+            robot.drive(940, 0.5, robot.FORWARD);
         }
 
         else{

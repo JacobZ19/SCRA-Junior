@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -170,12 +171,12 @@ public class SimpleDrive extends OpMode {
         }
 
         //custom up arm
-        if (gamepad2.dpad_right && liftpos <=370) {
+        if (gamepad2.dpad_right && liftpos <=450) {
             liftpos = lift.getCurrentPosition();
-            liftpos += 24;
+            liftpos += 1;
             lift.setTargetPosition((int) liftpos);
 
-            lift.setPower(0.13);
+            lift.setPower(0.05);
 
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
@@ -184,10 +185,10 @@ public class SimpleDrive extends OpMode {
         else if (gamepad2.dpad_left && liftpos > 0) {
 
             liftpos = lift.getCurrentPosition();
-            liftpos -= 24;
+            liftpos -= 1;
             lift.setTargetPosition((int) liftpos);
 
-            lift.setPower(0.13);
+            lift.setPower(0.05);
 
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
@@ -214,34 +215,27 @@ public class SimpleDrive extends OpMode {
         //this is med pole
         if (gamepad2.a)
         {
-            lift.setTargetPosition(425);
+            lift.setTargetPosition(270);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            lift.setPower(0.13);
+            lift.setPower(0.1);
         }
 
 
         //this is low pole
         if (gamepad2.b)
         {
-            lift.setTargetPosition(685);
+            lift.setTargetPosition(430);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            lift.setPower(0.13);
-        }
-
-        if (gamepad2.y)
-        {
-            lift.setTargetPosition(1035);
-            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            lift.setPower(0.13);
+            lift.setPower(0.1);
         }
 
 
         //this is ground junction
         if (gamepad2.x)
         {
-            lift.setTargetPosition(120);
+            lift.setTargetPosition(20);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            lift.setPower(0.13);
+            lift.setPower(0.2);
         }
 
         //sets arm too 0.12511238294583
@@ -249,7 +243,7 @@ public class SimpleDrive extends OpMode {
         {
             lift.setTargetPosition(0);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            lift.setPower(0.1);
+            lift.setPower(0.12511238294583);
         }
 
 

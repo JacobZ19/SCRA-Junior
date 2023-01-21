@@ -126,28 +126,25 @@ public class SpinbotTeleOp extends OpMode {
             rightBackPower = -1;
         }
 
-        if(gamepad2.left_trigger >= 0.1 && liftpos >= 200){
-            if (turretpos >= -1800) {
-                turretpos = turret.getCurrentPosition();
-                turretpos -= 100;
-                turret.setTargetPosition((int) turretpos);
-                turret.setPower(1);
-                turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            }
+        if(gamepad2.left_stick_button && liftpos >= 150 && turretpos >= -1800){
+
+            turretpos = turret.getCurrentPosition();
+            turretpos -= 90;
+            turret.setTargetPosition((int) turretpos);
+            turret.setPower(10);
+            turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
 
-        else if(gamepad2.right_trigger >= 0.1 && liftpos >= 200){
-            if (turretpos >= -1800) {
-                turretpos = turret.getCurrentPosition();
-                turretpos += 100;
-                turret.setTargetPosition((int) turretpos);
-                turret.setPower(1);
-                turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            }
+        else if(gamepad2.right_stick_button && liftpos >= 150 && turretpos <= 1800){
+            turretpos = turret.getCurrentPosition();
+            turretpos += 90;
+            turret.setTargetPosition((int) turretpos);
+            turret.setPower(10);
+            turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
 
         //custom up arm
-        if (gamepad2.dpad_right && liftpos <= 970) {
+        if (gamepad2.dpad_right && liftpos <= 1070) {
             liftpos = lift.getCurrentPosition();
             liftpos += 40;
             lift.setTargetPosition((int) liftpos);
@@ -191,25 +188,25 @@ public class SpinbotTeleOp extends OpMode {
         //this is med pole
         if (gamepad2.a)
         {
-            lift.setTargetPosition(420);
+            lift.setTargetPosition(325);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            lift.setPower(0.08);
+            lift.setPower(0.15);
         }
 
 
         //this is low pole
         if (gamepad2.b)
         {
-            lift.setTargetPosition(725);
+            lift.setTargetPosition(625);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            lift.setPower(0.08);
+            lift.setPower(0.15);
         }
 
         if (gamepad2.y)
         {
-            lift.setTargetPosition(966);
+            lift.setTargetPosition(1000);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            lift.setPower(0.08);
+            lift.setPower(0.15);
         }
 
 
@@ -218,7 +215,7 @@ public class SpinbotTeleOp extends OpMode {
         {
             lift.setTargetPosition(100);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            lift.setPower(0.08);
+            lift.setPower(0.15);
         }
 
         //sets arm too 0.12511238294583
@@ -226,7 +223,7 @@ public class SpinbotTeleOp extends OpMode {
         {
             lift.setTargetPosition(0);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            lift.setPower(0.1);
+            lift.setPower(0.2);
         }
 
 //hi
@@ -251,7 +248,7 @@ public class SpinbotTeleOp extends OpMode {
                 lift.setTargetPosition(310);
                 lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 lift.setPower(0.08);
-                sleep(4000);
+                sleep(10000);
                 turret.setTargetPosition(0);
                 turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 if (turretpos > 0) {
@@ -259,11 +256,11 @@ public class SpinbotTeleOp extends OpMode {
                 } else if (turretpos < 0) {
                     turret.setPower(0.05);
                 }
-                sleep(4000);
+                sleep(10000);
                 lift.setTargetPosition(0);
                 lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 lift.setPower(0.1);
-                sleep(4000);
+                sleep(10000);
             }
         }
 

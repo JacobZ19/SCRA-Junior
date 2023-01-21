@@ -31,6 +31,7 @@ package org.firstinspires.ftc.teamcode.auton;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -48,8 +49,8 @@ import java.util.ArrayList;
 // This is partially 22092 cyber eagles jade work
 // You may only use this code over cyber eagles jade consent and FTC consent
 
-@Autonomous(name="Auto Test RIGHT")
-
+//@Autonomous(name="Auto Test RIGHT")
+@Disabled
 public class autotest extends LinearOpMode
 {
     OpenCvCamera camera;

@@ -30,6 +30,7 @@ public class AutoDrive {
     public final int ARMDOWN = 8;
     public final int CLAWCLOSE = 9;
     public final int CLAWOPEN = 10;
+    public final int GROUND = 11;
     DcMotor lift = null;
     public Servo Claw;
     DcMotor rightFrontDrive;
@@ -154,6 +155,12 @@ public class AutoDrive {
 
         else if (direction ==CLAWOPEN) {
             Claw.setPosition(0.2);
+
+        }
+        else if (direction == GROUND)   {
+            lift.setTargetPosition(100);
+            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            lift.setPower(0.13);
 
         }
 
