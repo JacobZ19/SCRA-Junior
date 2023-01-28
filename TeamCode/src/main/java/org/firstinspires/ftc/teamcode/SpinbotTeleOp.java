@@ -4,16 +4,17 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.teamcode.auton.AutoDrive;
-
-import java.util.concurrent.TimeUnit;
 
 @TeleOp
 
 public class SpinbotTeleOp extends OpMode {
 
+    Gamepad.RumbleEffect Endgame;
+    Gamepad.RumbleEffect Park;
 
     private DcMotor leftFrontDrive = null;
     private DcMotor rightFrontDrive = null;
@@ -27,6 +28,9 @@ public class SpinbotTeleOp extends OpMode {
     public float turretpos;
     public boolean Forward = true;
     public boolean Backwark = true;
+    public float time_elapsed = 0;
+    public boolean Endgametrue = false;
+    public boolean Parktrue = false;
 
     AutoDrive robot = new AutoDrive(this);
 
@@ -42,6 +46,13 @@ public class SpinbotTeleOp extends OpMode {
     @Override
     public void init()
     {
+        Endgame = new Gamepad.RumbleEffect.Builder()
+                .addStep(1.0, 1.0, 1000)  //  Rumble right motor 100% for 500 mSec
+                .build();
+        Park = new Gamepad.RumbleEffect.Builder()
+                .addStep(0.5, 0.5, 500)  //  Rumble right motor 100% for 500 mSec
+                .build();
+
         //tells you to press start
         telemetry.addLine(">>>>>> PRESS START BUTTON");
         telemetry.update();
@@ -87,22 +98,18 @@ public class SpinbotTeleOp extends OpMode {
         double leftBackPower;
         double rightFrontPower;
         double rightBackPower;
-//        double turretpower;
 
 
         //set drive controls
         double drive = -gamepad1.left_stick_y;
         double strafe = gamepad1.left_stick_x;
         double turn = gamepad1.right_stick_x;
-//        double turretleft = gamepad2.left_trigger;
-//        double turretright = gamepad2.right_trigger;
 
         //set moter power
         leftFrontPower = Range.clip(drive+ turn + strafe, -0.6, 0.6);
         rightFrontPower = Range.clip(drive - turn - strafe, -0.6, 0.6);
         leftBackPower = Range.clip(drive + turn - strafe, -0.6, 0.6);
         rightBackPower = Range.clip(drive - turn + strafe, -0.6, 0.6);
-//        turretpower = Range.clip(turretleft - turretright / 10, -0.5, 0.5);
 
 
         //telemetry define
@@ -120,7 +127,29 @@ public class SpinbotTeleOp extends OpMode {
         telemetry.update();
         //endgame timer
         liftpos = lift.getCurrentPosition();
-//movement code
+
+        if (time_elapsed < 4800) {
+            time_elapsed += 1;
+        }
+        else {
+            time_elapsed +=1;
+            if (!! Endgametrue) {
+                gamepad1.runRumbleEffect(Endgame);
+                gamepad2.runRumbleEffect(Endgame);
+                telemetry.addLine(">>>>>Collect the DUCK BEACON<<<<<");
+                Endgametrue = true;
+            }
+
+            if (time_elapsed >= 6900) {
+                if (!! Parktrue) {
+                    gamepad1.runRumbleEffect(Park);
+                    gamepad2.runRumbleEffect(Park);
+                    telemetry.addLine(">>>>>PARK IN THE TERMINAL<<<<<");
+                    Parktrue = true;
+                }
+            }
+        }
+
         if(gamepad1.touchpad){
             Claw.setPosition(0.35);
             robot.drive(500, 0.12, robot.BACKWARD);
@@ -135,31 +164,6 @@ public class SpinbotTeleOp extends OpMode {
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             lift.setPower(0.1);
         }
-//
-//        else if(gamepad1.left_stick_y >= 0.2 && gamepad1.right_stick_x <= -0.2){
-//            Forward = true;
-//            leftFrontPower = 1;
-//            leftBackPower = 1;
-//            rightFrontPower = -1;
-//            rightBackPower = -1;
-//        }
-        Backwark = false;
-//        if(gamepad1.left_stick_y <= -0.2 && gamepad1.right_stick_x >= 0.2 && Forward != true){
-//            Backwark = true;
-//            rightFrontPower = 1;
-//            rightBackPower = 1;
-//            leftFrontPower = -1;
-//            leftBackPower = -1;
-//        }
-//
-//        else if(gamepad1.left_stick_y <= -0.2 && gamepad1.right_stick_x <= -0.2 && Forward != true){
-//            Backwark = true;
-//            leftFrontPower = 1;
-//            leftBackPower = 1;
-//            rightFrontPower = -1;
-//            rightBackPower = -1;
-//        }
-        Forward = false;
 
         if(gamepad2.left_stick_button && liftpos >= 150 && turretpos >= -1800){
 
@@ -299,7 +303,6 @@ public class SpinbotTeleOp extends OpMode {
         else if(gamepad2.right_bumper){
             Claw.setPosition(0.35);
         }
-        //else if(!gamepad1.a) changed = false;
 
         leftFrontDrive.setPower((leftFrontPower));
         rightFrontDrive.setPower((rightFrontPower));
