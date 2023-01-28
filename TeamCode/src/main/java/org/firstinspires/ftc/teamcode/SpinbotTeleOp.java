@@ -112,14 +112,14 @@ public class SpinbotTeleOp extends OpMode {
         //endgame timer
         liftpos = lift.getCurrentPosition();
 //movement code
-        if(gamepad1.left_stick_y >= 0.1 && gamepad1.right_stick_x <= -0.1){
+        if(gamepad1.left_stick_y >= 0.2 && gamepad1.left_stick_x >= 0.1){
             rightFrontPower = 1;
             rightBackPower = 1;
             leftFrontPower = -1;
             leftBackPower = -1;
         }
 
-        else if(gamepad1.left_stick_y <= -0.1 && gamepad1.right_stick_x <= -0.1){
+        else if(gamepad1.left_stick_y <= -0.2 && gamepad1.left_stick_x <= -0.1){
             leftFrontPower = 1;
             leftBackPower = 1;
             rightFrontPower = -1;
@@ -190,23 +190,23 @@ public class SpinbotTeleOp extends OpMode {
         {
             lift.setTargetPosition(325);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            lift.setPower(0.15);
+            lift.setPower(0.30);
         }
 
 
         //this is low pole
         if (gamepad2.b)
         {
-            lift.setTargetPosition(625);
+            lift.setTargetPosition(650);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            lift.setPower(0.15);
+            lift.setPower(0.30);
         }
 
         if (gamepad2.y)
         {
             lift.setTargetPosition(1000);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            lift.setPower(0.15);
+            lift.setPower(0.30);
         }
 
 
