@@ -9,6 +9,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.SpinbotTeleOp;
+
 // This is 22092 cyber eagles jade work
 // You may only use this code over cyber eagles jade consent
 
@@ -19,6 +21,8 @@ public class AutoDrive {
     public ElapsedTime  runtime = new ElapsedTime();
     public AutoDrive(LinearOpMode opMode){
         this.opMode= opMode;
+    }
+    public AutoDrive(SpinbotTeleOp spinbotTeleOp) {
     }
     public final int FORWARD = 1;
     public final int BACKWARD = 2;
@@ -47,7 +51,6 @@ public class AutoDrive {
         lift = opMode.hardwareMap.get(DcMotor.class,"Lift");
         Claw = opMode.hardwareMap.get(Servo.class, "Claw");
 
-        Claw.setPosition(0.2);
 
         lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);

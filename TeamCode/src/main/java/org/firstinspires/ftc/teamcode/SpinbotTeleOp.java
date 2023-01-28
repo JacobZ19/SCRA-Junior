@@ -28,6 +28,8 @@ public class SpinbotTeleOp extends OpMode {
     public boolean Forward = true;
     public boolean Backwark = true;
 
+    AutoDrive robot = new AutoDrive(this);
+
     static void sleep(int LongMilliseconds) {
         try {
             Thread.sleep(LongMilliseconds);
@@ -119,8 +121,19 @@ public class SpinbotTeleOp extends OpMode {
         //endgame timer
         liftpos = lift.getCurrentPosition();
 //movement code
-        if(gamepad1.a){
-
+        if(gamepad1.touchpad){
+            Claw.setPosition(0.35);
+            robot.drive(500, 0.12, robot.BACKWARD);
+            lift.setTargetPosition(660);
+            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            lift.setPower(0.1);
+        }
+        if(gamepad1.touchpad_finger_2){
+            Claw.setPosition(0.35);
+            robot.drive(500, 0.12, robot.BACKWARD);
+            lift.setTargetPosition(995);
+            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            lift.setPower(0.1);
         }
 //
 //        else if(gamepad1.left_stick_y >= 0.2 && gamepad1.right_stick_x <= -0.2){
@@ -262,6 +275,18 @@ public class SpinbotTeleOp extends OpMode {
             turret.setTargetPosition(0);
             turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             turret.setPower(0.3);
+        }
+        if (gamepad2.left_trigger >= 0.8)
+        {
+            turret.setTargetPosition(-1800);
+            turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            turret.setPower(1);
+        }
+        else if (gamepad2.right_trigger >= 0.8)
+        {
+            turret.setTargetPosition(1800);
+            turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            turret.setPower(1);
         }
 
 //hi
