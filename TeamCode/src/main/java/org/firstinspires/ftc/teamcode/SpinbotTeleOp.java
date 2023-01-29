@@ -87,6 +87,8 @@ public class SpinbotTeleOp extends OpMode {
     @Override
     public void start() {
         telemetry.clearAll();
+        Endgametrue = false;
+        Parktrue = false;
     }
 
 
@@ -117,7 +119,7 @@ public class SpinbotTeleOp extends OpMode {
         telemetry.addData("Turret Pos", turret.getCurrentPosition());
         telemetry.addData("Average Speed: ", (leftFrontPower + leftBackPower + rightBackPower + rightFrontPower) / 4);
         telemetry.addData("Left Stick X: ", gamepad1.left_stick_x);
-        telemetry.addData("Left Stick Y: ", gamepad1.left_stick_y);
+        telemetry.addData("Left Stick Y: ", -gamepad1.left_stick_y);
         telemetry.addData("Right Stick X: ", gamepad1.right_stick_x);
         telemetry.addData("Right Stick Y: ", gamepad1.right_stick_y);
 
@@ -128,20 +130,20 @@ public class SpinbotTeleOp extends OpMode {
         //endgame timer
         liftpos = lift.getCurrentPosition();
 
-        if (time_elapsed < 4800) {
+        if (time_elapsed < 14000) {
             time_elapsed += 1;
         }
         else {
             time_elapsed +=1;
-            if (!! Endgametrue) {
+            if (! Endgametrue) {
                 gamepad1.runRumbleEffect(Endgame);
                 gamepad2.runRumbleEffect(Endgame);
                 telemetry.addLine(">>>>>Collect the DUCK BEACON<<<<<");
                 Endgametrue = true;
             }
 
-            if (time_elapsed >= 6900) {
-                if (!! Parktrue) {
+            if (time_elapsed >= 190000) {
+                if (! Parktrue) {
                     gamepad1.runRumbleEffect(Park);
                     gamepad2.runRumbleEffect(Park);
                     telemetry.addLine(">>>>>PARK IN THE TERMINAL<<<<<");
@@ -150,19 +152,35 @@ public class SpinbotTeleOp extends OpMode {
             }
         }
 
-        if(gamepad1.touchpad){
+        if(gamepad1.b){
             Claw.setPosition(0.35);
-            robot.drive(500, 0.12, robot.BACKWARD);
             lift.setTargetPosition(660);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             lift.setPower(0.1);
+            leftFrontPower = -0.2;
+            leftBackPower = -0.2;
+            rightFrontPower = -0.2;
+            rightBackPower = -0.2;
         }
-        if(gamepad1.touchpad_finger_2){
+        if(gamepad1.y){
             Claw.setPosition(0.35);
-            robot.drive(500, 0.12, robot.BACKWARD);
             lift.setTargetPosition(995);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             lift.setPower(0.1);
+            leftFrontPower = -0.2;
+            leftBackPower = -0.2;
+            rightFrontPower = -0.2;
+            rightBackPower = -0.2;
+        }
+        if(gamepad1.x){
+            Claw.setPosition(0.35);
+            lift.setTargetPosition(995);
+            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            lift.setPower(0.1);
+            leftFrontPower = -0.2;
+            leftBackPower = -0.2;
+            rightFrontPower = -0.2;
+            rightBackPower = -0.2;
         }
 
         if(gamepad2.left_stick_button && liftpos >= 150 && turretpos >= -1800){
