@@ -310,13 +310,13 @@ public class SpinbotTeleOp extends OpMode {
         }
         if (gamepad2.left_trigger >= 0.8 && liftpos >= -10 && liftpos <= 10)
         {
-            turret.setTargetPosition(-1800);
+            turret.setTargetPosition(-1300);
             turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             turret.setPower(1);
         }
         else if (gamepad2.right_trigger >= 0.8 && liftpos >= -10 && liftpos <= 10)
         {
-            turret.setTargetPosition(1800);
+            turret.setTargetPosition(1300);
             turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             turret.setPower(1);
         }
