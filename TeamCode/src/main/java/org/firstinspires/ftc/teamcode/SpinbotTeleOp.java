@@ -158,30 +158,30 @@ public class SpinbotTeleOp extends OpMode {
             lift.setTargetPosition(660);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             lift.setPower(0.1);
-            leftFrontPower = -0.18;
-            leftBackPower = -0.18;
-            rightFrontPower = -0.18;
-            rightBackPower = -0.18;
+            leftFrontPower = -0.16;
+            leftBackPower = -0.16;
+            rightFrontPower = -0.16;
+            rightBackPower = -0.16;
         }
         if(gamepad1.y){
             Claw.setPosition(0.35);
             lift.setTargetPosition(995);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             lift.setPower(0.1);
-            leftFrontPower = -0.18;
-            leftBackPower = -0.18;
-            rightFrontPower = -0.18;
-            rightBackPower = -0.18;
+            leftFrontPower = -0.16;
+            leftBackPower = -0.16;
+            rightFrontPower = -0.16;
+            rightBackPower = -0.16;
         }
         if(gamepad1.x){
             Claw.setPosition(0.35);
             lift.setTargetPosition(995);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             lift.setPower(0.1);
-            leftFrontPower = -0.18;
-            leftBackPower = -0.18;
-            rightFrontPower = -0.18;
-            rightBackPower = -0.18;
+            leftFrontPower = -0.16;
+            leftBackPower = -0.16;
+            rightFrontPower = -0.16;
+            rightBackPower = -0.16;
         }
 
         if(gamepad2.left_stick_button && liftpos >= 150 && turretpos >= -1400){
