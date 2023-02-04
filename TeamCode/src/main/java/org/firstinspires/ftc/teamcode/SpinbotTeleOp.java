@@ -31,6 +31,7 @@ public class SpinbotTeleOp extends OpMode {
     public float time_elapsed = 0;
     public boolean Endgametrue = false;
     public boolean Parktrue = false;
+    public float time = 0;
 
     AutoDrive robot = new AutoDrive(this);
 
@@ -294,12 +295,17 @@ public class SpinbotTeleOp extends OpMode {
         //sets arm too 0.12511238294583
         if (gamepad2.dpad_down)
         {
+            time += 1;
             turret.setTargetPosition(0);
             turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             turret.setPower(1);
-            lift.setTargetPosition(0);
-            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            lift.setPower(-0.3);
+
+            if (time >= 180) {
+                lift.setTargetPosition(0);
+                lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                lift.setPower(-0.3);
+            }
+            time = 0;
         }
 
         if (gamepad2.touchpad)
@@ -308,13 +314,13 @@ public class SpinbotTeleOp extends OpMode {
             turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             turret.setPower(1);
         }
-        if (gamepad2.left_trigger >= 0.8 && liftpos >= -10 && liftpos <= 10)
+        if (gamepad2.left_trigger >= 0.8 && liftpos >= 100)
         {
             turret.setTargetPosition(-1300);
             turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             turret.setPower(1);
         }
-        else if (gamepad2.right_trigger >= 0.8 && liftpos >= -10 && liftpos <= 10)
+        else if (gamepad2.right_trigger >= 0.8 && liftpos >= 100)
         {
             turret.setTargetPosition(1300);
             turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
