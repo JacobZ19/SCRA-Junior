@@ -49,8 +49,8 @@ import java.util.ArrayList;
 // This is partially 22092 cyber eagles jade work
 // You may only use this code over cyber eagles jade consent and FTC consent
 
-//@Autonomous(name="Auto Test RIGHT")
-@Disabled
+@Autonomous(name="Auto Test RIGHT")
+
 public class autotest extends LinearOpMode
 {
     OpenCvCamera camera;

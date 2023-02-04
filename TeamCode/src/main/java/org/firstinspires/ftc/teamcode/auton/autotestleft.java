@@ -34,8 +34,8 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import java.util.ArrayList;
 
-//@Autonomous(name="Auto Test LEFT")
-@Disabled
+@Autonomous(name="Auto Test LEFT")
+
 public class autotestleft extends LinearOpMode
 {
     OpenCvCamera camera;
@@ -161,11 +161,10 @@ public class autotestleft extends LinearOpMode
         sleep(200);
         robot.drive(5,0.11111f, robot.ARMUP2);
         sleep(2000);
-        robot.drive(1700, 0.25, robot.FORWARD);
+        robot.drive(2000, 0.25, robot.FORWARD);
         sleep(2000);
         robot.drive(690, 0.25, robot.RIGHTTURN);
         sleep(1000);
-        robot.drive(400, 0.25, robot.FORWARD);
         sleep(1000);
         robot.drive(5, 0.333333f, robot.CLAWOPEN);
         sleep(500);

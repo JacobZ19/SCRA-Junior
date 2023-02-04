@@ -66,7 +66,7 @@ public class SpinbotTeleOp extends OpMode {
         turret = hardwareMap.get(DcMotor.class, "turret");
         Claw = hardwareMap.get(Servo.class, "Claw");
         lift = hardwareMap.get(DcMotor.class,"Lift");
-        Claw.setPosition(ClawHome);
+        Claw.setPosition(0.35);
 
         //resets and sets lift and drive motions
         lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
