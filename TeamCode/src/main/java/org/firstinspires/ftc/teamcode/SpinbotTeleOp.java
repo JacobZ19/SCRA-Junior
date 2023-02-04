@@ -240,10 +240,11 @@ public class SpinbotTeleOp extends OpMode {
         //slowest movement
         if (gamepad1.left_bumper)
         {
-            leftFrontPower *= (7/6);
-            leftBackPower *= (7/6);
-            rightFrontPower *= (7/6);
-            rightBackPower *= (7/6);
+            leftFrontPower *= 1.25;
+            leftBackPower *= 1.25;
+            rightFrontPower *= 1.25;
+            rightBackPower *= 1.25
+            ;
         }
 
 
