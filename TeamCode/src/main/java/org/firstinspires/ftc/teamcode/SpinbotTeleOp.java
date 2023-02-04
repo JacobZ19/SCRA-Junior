@@ -130,6 +130,7 @@ public class SpinbotTeleOp extends OpMode {
         //telemetry update
         telemetry.update();
         //endgame timer
+        turretpos = turret.getCurrentPosition();
         liftpos = lift.getCurrentPosition();
 
         if (time_elapsed < 14000) {
@@ -239,10 +240,10 @@ public class SpinbotTeleOp extends OpMode {
         //slowest movement
         if (gamepad1.left_bumper)
         {
-            leftFrontPower /= 2;
-            leftBackPower /= 2;
-            rightFrontPower /= 2;
-            rightBackPower /= 2;
+            leftFrontPower *= (7/6);
+            leftBackPower *= (7/6);
+            rightFrontPower *= (7/6);
+            rightBackPower *= (7/6);
         }
 
 
@@ -259,7 +260,7 @@ public class SpinbotTeleOp extends OpMode {
             turret.setTargetPosition(0);
             turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             turret.setPower(1);
-            lift.setTargetPosition(220);
+            lift.setTargetPosition(170);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             lift.setPower(0.25);
         }
@@ -295,17 +296,21 @@ public class SpinbotTeleOp extends OpMode {
         //sets arm too 0.12511238294583
         if (gamepad2.dpad_down)
         {
-            time += 1;
             turret.setTargetPosition(0);
             turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             turret.setPower(1);
+            telemetry.addLine("Just before the if loop");
+            telemetry.update();
 
-            if (time >= 180) {
+            if (turretpos >= -10 && turretpos <= 10) {
+                telemetry.addLine("In in the if loop");
+                telemetry.update();
                 lift.setTargetPosition(0);
                 lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 lift.setPower(-0.3);
             }
-            time = 0;
+            telemetry.addLine("after the if loop");
+            telemetry.update();
         }
 
         if (gamepad2.touchpad)
