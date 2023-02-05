@@ -326,37 +326,31 @@ public class SpinbotTeleOp extends OpMode {
             turret.setPower(1);
         }
 
-//hi
-
-        //claw close
+        //Claw Close:
         if(gamepad2.left_bumper){
             Claw.setPosition(0.0);
         }
-        //claw open
+        //Claw Open:
         else if(gamepad2.right_bumper){
-            Claw.setPosition(0.35);
+            Claw.setPosition(0.6);
         }
 
+        //Set drive power:
         leftFrontDrive.setPower((leftFrontPower));
         rightFrontDrive.setPower((rightFrontPower));
         leftBackDrive.setPower((leftBackPower));
         rightBackDrive.setPower((rightBackPower));
-
-
     }
-
-
 
     @Override
     public void stop()
     {
-        // when stop is activated it stops
+        //stops robot
         leftFrontDrive.setPower(0);
         rightFrontDrive.setPower(0);
         leftBackDrive.setPower(0);
         rightBackDrive.setPower(0);
         lift.setPower(0);
-
     }
 
 }
