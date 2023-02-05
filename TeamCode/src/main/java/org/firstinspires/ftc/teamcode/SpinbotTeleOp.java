@@ -300,18 +300,11 @@ public class SpinbotTeleOp extends OpMode {
             turret.setTargetPosition(0);
             turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             turret.setPower(1);
-            telemetry.addLine("Just before the if loop");
-            telemetry.update();
-
             if (turretpos >= -10 && turretpos <= 10) {
-                telemetry.addLine("In in the if loop");
-                telemetry.update();
                 lift.setTargetPosition(0);
                 lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 lift.setPower(-0.3);
             }
-            telemetry.addLine("after the if loop");
-            telemetry.update();
         }
 
         if (gamepad2.touchpad)
