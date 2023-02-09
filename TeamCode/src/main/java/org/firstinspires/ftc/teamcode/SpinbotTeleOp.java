@@ -41,8 +41,8 @@ public class SpinbotTeleOp extends OpMode {
 
     public float time = 0;
 
-    final double Endgamefloat = 60.0;
-    final double EndOfGamefloat = 60.0;
+    final double Endgamefloat = 80.0;
+    final double EndOfGamefloat = 115.0;
 
     ElapsedTime runtime = new ElapsedTime();
 
