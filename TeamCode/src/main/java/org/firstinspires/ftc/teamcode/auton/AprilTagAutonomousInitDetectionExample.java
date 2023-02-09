@@ -192,7 +192,7 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
 
         if(tagOfInterest == null || tagOfInterest.id == LEFT){
             tag_number = 1;
-            robot.drive(20, 0.5, robot.FORWARD);
+            robot.drive(40, 0.5, robot.FORWARD);
             robot.drive(1800, 0.5, robot.CLAWCLOSE);
             sleep(500);
             robot.drive(1300, 0.5, robot.STRAFELEFT);
@@ -204,7 +204,7 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
         }
         else if(tagOfInterest.id == MIDDLE) {
             tag_number = 2;
-            robot.drive(20, 0.5, robot.FORWARD);
+            robot.drive(40, 0.5, robot.FORWARD);
             robot.drive(1300, 0.5, robot.CLAWCLOSE);
             sleep(500);
             robot.drive(200, 0.5, robot.STRAFELEFT);
@@ -217,7 +217,7 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
 
         else if(tagOfInterest.id == RIGHT){
             tag_number = 3;
-            robot.drive(20, 0.5, robot.FORWARD);
+            robot.drive(40, 0.5, robot.FORWARD);
             robot.drive(1300, 0.5, robot.CLAWCLOSE);
             sleep(500);
             robot.drive(800, 0.5, robot.STRAFERIGHT);

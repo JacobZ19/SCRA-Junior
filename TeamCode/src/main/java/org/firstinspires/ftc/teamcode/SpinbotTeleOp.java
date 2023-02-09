@@ -350,6 +350,7 @@ public class SpinbotTeleOp extends OpMode {
         if (!Parktrue) {
             telemetry.addData(">", "Time until Park Alert:  \n", (EndOfGamefloat - runtime.seconds()) );
         }
+        telemetry.update();
     }
 
     @Override
