@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -11,14 +10,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.teamcode.auton.AutoDrive;
 
-
-
-//new computer test test
-
 @TeleOp
 
 public class SpinbotTeleOp extends OpMode {
-
 
     Gamepad.RumbleEffect Endgame;
     Gamepad.RumbleEffect Park;
@@ -30,23 +24,15 @@ public class SpinbotTeleOp extends OpMode {
     private DcMotor turret = null;
     private DcMotor lift = null;
     public Servo Claw = null;
-    public final static double ClawHome = 0.0;
     public float liftpos;
     public float turretpos;
-    public boolean Forward = true;
-    public boolean Backwark = true;
     public float time_elapsed = 0;
     public boolean Endgametrue = false;
     public boolean Parktrue = false;
-
-    public float time = 0;
-
     final double Endgamefloat = 80.0;
     final double EndOfGamefloat = 115.0;
 
     ElapsedTime runtime = new ElapsedTime();
-
-    AutoDrive robot = new AutoDrive(this);
 
     static void sleep(int LongMilliseconds) {
         try {
@@ -213,7 +199,7 @@ public class SpinbotTeleOp extends OpMode {
             lift.setPower(0.1);
 
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            sleep(200);
+            sleep(400);
         }
 
         //custom down arm
@@ -226,7 +212,7 @@ public class SpinbotTeleOp extends OpMode {
             lift.setPower(0.1);
 
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            sleep(200);
+            sleep(400);
         }
 
         //slow movement
