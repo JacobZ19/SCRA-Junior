@@ -2,18 +2,23 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.teamcode.auton.AutoDrive;
+
+
 
 //new computer test test
 
 @TeleOp
 
 public class SpinbotTeleOp extends OpMode {
+
 
     Gamepad.RumbleEffect Endgame;
     Gamepad.RumbleEffect Park;
@@ -33,7 +38,13 @@ public class SpinbotTeleOp extends OpMode {
     public float time_elapsed = 0;
     public boolean Endgametrue = false;
     public boolean Parktrue = false;
+
     public float time = 0;
+
+    final double Endgamefloat = 60.0;
+    final double EndOfGamefloat = 60.0;
+
+    ElapsedTime runtime = new ElapsedTime();
 
     AutoDrive robot = new AutoDrive(this);
 
@@ -51,8 +62,14 @@ public class SpinbotTeleOp extends OpMode {
     {
         Endgame = new Gamepad.RumbleEffect.Builder()
                 .addStep(1.0, 1.0, 1000)  //  Rumble right motor 100% for 500 mSec
+                .addStep(0.0, 0.0, 500)  //  Rumble right motor 100% for 500 mSec
+                .addStep(1.0, 1.0, 1000)  //  Rumble right motor 100% for 500 mSec
+                .addStep(0.0, 0.0, 500)  //  Rumble right motor 100% for 500 mSec
+                .addStep(1.0, 1.0, 1000)  //  Rumble right motor 100% for 500 mSec
                 .build();
         Park = new Gamepad.RumbleEffect.Builder()
+                .addStep(0.5, 0.5, 500)  //  Rumble right motor 100% for 500 mSec
+                .addStep(0.5, 0.5, 200)  //  Rumble right motor 100% for 500 mSec
                 .addStep(0.5, 0.5, 500)  //  Rumble right motor 100% for 500 mSec
                 .build();
 
@@ -93,12 +110,14 @@ public class SpinbotTeleOp extends OpMode {
         Endgametrue = false;
         Parktrue = false;
         Claw.setPosition(0.6);
+        runtime.reset();
     }
 
 
 
     @Override
     public void loop() {
+        Rumble();
         //sets most drive things
         double leftFrontPower;
         double leftBackPower;
@@ -119,13 +138,13 @@ public class SpinbotTeleOp extends OpMode {
 
 
         //telemetry define
-        telemetry.addData("lift motor position: ", lift.getCurrentPosition());
-        telemetry.addData("Turret Pos", turret.getCurrentPosition());
-        telemetry.addData("Average Speed: ", (leftFrontPower + leftBackPower + rightBackPower + rightFrontPower) / 4);
+        telemetry.addData("Lift Encoder Ticks: ", lift.getCurrentPosition());
+        telemetry.addData("Turret Encoder Ticks", turret.getCurrentPosition());
+        telemetry.addData("Speed: ", (leftFrontPower + leftBackPower + rightBackPower + rightFrontPower) / 4);
         telemetry.addData("Left Stick X: ", gamepad1.left_stick_x);
         telemetry.addData("Left Stick Y: ", -gamepad1.left_stick_y);
         telemetry.addData("Right Stick X: ", gamepad1.right_stick_x);
-        telemetry.addData("Right Stick Y: ", gamepad1.right_stick_y);
+        telemetry.addData("Right Stick Y: ", -gamepad1.right_stick_y);
 
 
 
@@ -135,27 +154,7 @@ public class SpinbotTeleOp extends OpMode {
         turretpos = turret.getCurrentPosition();
         liftpos = lift.getCurrentPosition();
 
-        if (time_elapsed < 14000) {
-            time_elapsed += 1;
-        }
-        else {
-            time_elapsed +=1;
-            if (! Endgametrue) {
-                gamepad1.runRumbleEffect(Endgame);
-                gamepad2.runRumbleEffect(Endgame);
-                telemetry.addLine(">>>>>Collect the DUCK BEACON<<<<<");
-                Endgametrue = true;
-            }
 
-            if (time_elapsed >= 190000) {
-                if (! Parktrue) {
-                    gamepad1.runRumbleEffect(Park);
-                    gamepad2.runRumbleEffect(Park);
-                    telemetry.addLine(">>>>>PARK IN THE TERMINAL<<<<<");
-                    Parktrue = true;
-                }
-            }
-        }
 
         if(gamepad1.b){
             Claw.setPosition(0.35);
@@ -342,6 +341,29 @@ public class SpinbotTeleOp extends OpMode {
         rightFrontDrive.setPower((rightFrontPower));
         leftBackDrive.setPower((leftBackPower));
         rightBackDrive.setPower((rightBackPower));
+    }
+
+    public void Rumble()
+    {
+        if ((runtime.seconds() > Endgamefloat) && !Endgametrue)  {
+            gamepad1.runRumbleEffect(Endgame);
+            Endgametrue =true;
+        }
+
+        // Display the time remaining while we are still counting down.
+        if (!Endgametrue) {
+            telemetry.addData(">", "Time until Endgame Alert:  \n", (Endgamefloat - runtime.seconds()) );
+        }
+
+        if ((runtime.seconds() > EndOfGamefloat) && !Parktrue)  {
+            gamepad1.runRumbleEffect(Park);
+            Parktrue =true;
+        }
+
+        // Display the time remaining while we are still counting down.
+        if (!Parktrue) {
+            telemetry.addData(">", "Time until Park Alert:  \n", (EndOfGamefloat - runtime.seconds()) );
+        }
     }
 
     @Override
