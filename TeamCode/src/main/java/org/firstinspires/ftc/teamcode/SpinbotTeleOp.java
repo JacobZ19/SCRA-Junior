@@ -144,7 +144,7 @@ public class SpinbotTeleOp extends OpMode {
 
         if(gamepad1.b){
             Claw.setPosition(0.35);
-            lift.setTargetPosition(615);
+            lift.setTargetPosition(625);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             lift.setPower(0.1);
             leftFrontPower = -0.16;
@@ -164,7 +164,7 @@ public class SpinbotTeleOp extends OpMode {
         }
         if(gamepad1.x){
             Claw.setPosition(0.35);
-            lift.setTargetPosition(380);
+            lift.setTargetPosition(400);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             lift.setPower(0.1);
             leftFrontPower = -0.16;
@@ -238,7 +238,7 @@ public class SpinbotTeleOp extends OpMode {
         //this is med pole
         if (gamepad2.a)
         {
-            lift.setTargetPosition(380);
+            lift.setTargetPosition(400);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             lift.setPower(0.25);
         }
@@ -257,7 +257,7 @@ public class SpinbotTeleOp extends OpMode {
         //this is low pole
         if (gamepad2.b)
         {
-            lift.setTargetPosition(615);
+            lift.setTargetPosition(625);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             lift.setPower(0.25);
         }
