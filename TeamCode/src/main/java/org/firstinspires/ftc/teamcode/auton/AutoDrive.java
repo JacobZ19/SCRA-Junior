@@ -35,7 +35,10 @@ public class AutoDrive {
     public final int CLAWCLOSE = 9;
     public final int CLAWOPEN = 10;
     public final int GROUND = 11;
+    public final int ARMUP3 = 12;
+    public final int Turretright = 13;
     DcMotor lift = null;
+    DcMotor turret = null;
     public Servo Claw;
     DcMotor rightFrontDrive;
     DcMotor rightBackDrive;
@@ -49,11 +52,15 @@ public class AutoDrive {
         leftBackDrive = opMode.hardwareMap.get(DcMotor.class, "left_back");
         rightBackDrive = opMode.hardwareMap.get(DcMotor.class, "right_back");
         lift = opMode.hardwareMap.get(DcMotor.class,"Lift");
+        turret = opMode.hardwareMap.get(DcMotor.class,"turret");
         Claw = opMode.hardwareMap.get(Servo.class, "Claw");
 
 
         lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+
+        turret.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        turret.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
 
         leftFrontDrive.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -61,6 +68,7 @@ public class AutoDrive {
         leftBackDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         rightBackDrive.setDirection(DcMotorSimple.Direction.FORWARD);
         lift.setDirection(DcMotorSimple.Direction.REVERSE);
+        turret.setDirection(DcMotorSimple.Direction.FORWARD);
 //hi
 
     }
@@ -145,6 +153,12 @@ public class AutoDrive {
             lift.setPower(0.13);
 
         }
+        else if (direction == ARMUP3)   {
+            lift.setTargetPosition(900);
+            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            lift.setPower(0.13);
+
+        }
         else if (direction == ARMDOWN)   {
             lift.setTargetPosition(0);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -152,12 +166,12 @@ public class AutoDrive {
 
         }
         else if (direction ==CLAWCLOSE) {
-            Claw.setPosition(1);
+            Claw.setPosition(0.6);
 
         }
 
         else if (direction ==CLAWOPEN) {
-            Claw.setPosition(0.2);
+            Claw.setPosition(0.0);
 
         }
         else if (direction == GROUND)   {
@@ -165,6 +179,11 @@ public class AutoDrive {
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             lift.setPower(0.13);
 
+        }
+        else if (direction ==Turretright)  {
+            turret.setTargetPosition(2250);
+            turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            turret.setPower(1);
         }
 
     }

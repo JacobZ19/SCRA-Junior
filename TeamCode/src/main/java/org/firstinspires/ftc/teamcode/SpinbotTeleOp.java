@@ -154,7 +154,7 @@ public class SpinbotTeleOp extends OpMode {
         }
         if(gamepad1.y){
             Claw.setPosition(0.35);
-            lift.setTargetPosition(855);
+            lift.setTargetPosition(880);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             lift.setPower(0.1);
             leftFrontPower = -0.16;
@@ -173,20 +173,20 @@ public class SpinbotTeleOp extends OpMode {
             rightBackPower = -0.16;
         }
 
-        if(gamepad2.left_stick_button && liftpos >= 150 && turretpos >= -1400){
+        if(gamepad2.left_stick_button && liftpos >= 150 && turretpos >= -2000){
 
             turretpos = turret.getCurrentPosition();
             turretpos -= 100;
             turret.setTargetPosition((int) turretpos);
-            turret.setPower(0.71428571428571428571428571428571);
+            turret.setPower(1);
             turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
 
-        else if(gamepad2.right_stick_button && liftpos >= 150 && turretpos <= 1400){
+        else if(gamepad2.right_stick_button && liftpos >= 150 && turretpos <= 2000){
             turretpos = turret.getCurrentPosition();
             turretpos += 100;
             turret.setTargetPosition((int) turretpos);
-            turret.setPower(0.71428571428571428571428571428571);
+            turret.setPower(1);
             turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
 
@@ -247,7 +247,7 @@ public class SpinbotTeleOp extends OpMode {
         {
             turret.setTargetPosition(0);
             turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            turret.setPower(0.71428571428571428571428571428571);
+            turret.setPower(1);
             lift.setTargetPosition(230);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             lift.setPower(0.25);
@@ -264,7 +264,7 @@ public class SpinbotTeleOp extends OpMode {
 
         if (gamepad2.y)
         {
-            lift.setTargetPosition(855);
+            lift.setTargetPosition(880);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             lift.setPower(0.25);
         }
@@ -278,7 +278,7 @@ public class SpinbotTeleOp extends OpMode {
             lift.setPower(0.25);
             turret.setTargetPosition(0);
             turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            turret.setPower(0.71428571428571428571428571428571);
+            turret.setPower(1);
         }
 
         //sets arm too 0.12511238294583
@@ -286,7 +286,7 @@ public class SpinbotTeleOp extends OpMode {
         {
             turret.setTargetPosition(0);
             turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            turret.setPower(0.71428571428571428571428571428571);
+            turret.setPower(1);
             if (turretpos >= -10 && turretpos <= 10) {
                 lift.setTargetPosition(0);
                 lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -298,19 +298,19 @@ public class SpinbotTeleOp extends OpMode {
         {
             turret.setTargetPosition(0);
             turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            turret.setPower(0.71428571428571428571428571428571);
+            turret.setPower(1);
         }
         if (gamepad2.left_trigger >= 0.8 && liftpos >= 100)
         {
-            turret.setTargetPosition(-810);
+            turret.setTargetPosition(-1500);
             turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            turret.setPower(0.71428571428571428571428571428571);
+            turret.setPower(1);
         }
         else if (gamepad2.right_trigger >= 0.8 && liftpos >= 100)
         {
-            turret.setTargetPosition(890);
+            turret.setTargetPosition(1500);
             turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            turret.setPower(0.71428571428571428571428571428571);
+            turret.setPower(1);
         }
 
         //Claw Close:
