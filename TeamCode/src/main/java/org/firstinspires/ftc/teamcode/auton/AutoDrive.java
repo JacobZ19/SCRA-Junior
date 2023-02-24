@@ -37,6 +37,7 @@ public class AutoDrive {
     public final int GROUND = 11;
     public final int ARMUP3 = 12;
     public final int Turretright = 13;
+    public final int Turretreset = 14;
     DcMotor lift = null;
     DcMotor turret = null;
     public Servo Claw;
@@ -182,6 +183,11 @@ public class AutoDrive {
         }
         else if (direction ==Turretright)  {
             turret.setTargetPosition(2250);
+            turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            turret.setPower(1);
+        }
+        else if (direction ==Turretreset) {
+            turret.setTargetPosition(0);
             turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             turret.setPower(1);
         }

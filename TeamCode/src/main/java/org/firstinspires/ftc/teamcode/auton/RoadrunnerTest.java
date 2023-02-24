@@ -13,6 +13,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.drive.DriveConstants;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.auton.AutoDrive;
+import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
 @Config
 @Autonomous(name = "ROADRUNNER TEST")
@@ -23,21 +24,38 @@ public class RoadrunnerTest extends LinearOpMode {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         AutoDrive robot = new AutoDrive(this);
 
-        Trajectory TEST1 = drive.trajectoryBuilder(new Pose2d())
+        TrajectorySequence TEST1 = drive.trajectorySequenceBuilder(new Pose2d())
+                .addDisplacementMarker(() -> {
+                    robot.drive(0, 0, robot.CLAWCLOSE);
+                })
                 .forward(38,
                         SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL / 4, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL / 2)
                 )
-                .build();
-
-        Trajectory TEST2 = drive.trajectoryBuilder(TEST1.end())
+                .addDisplacementMarker(() -> {
+                    robot.drive(0, 0, robot.ARMUP3);
+                })
+                .waitSeconds(5)
+                .addDisplacementMarker(() -> {
+                    robot.drive(0, 0, robot.Turretright);
+                })
+                .waitSeconds(4)
+                .addDisplacementMarker(() -> {
+                    robot.drive(0, 0, robot.CLAWOPEN);
+                })
+                .waitSeconds(1)
+                .addDisplacementMarker(() -> {
+                    robot.drive(0,0, robot.Turretreset);
+                })
+                .waitSeconds(4)
+                .addDisplacementMarker(() -> {
+                    robot.drive(0, 0, robot.ARMDOWN);
+                })
+                .waitSeconds(5)
                 .back(12,
                         SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL / 4, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL / 2)
                 )
-                .build();
-
-        Trajectory TEST3 = drive.trajectoryBuilder(TEST2.end())
                 .strafeLeft(24,
                         SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL / 4, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL / 2)
@@ -48,8 +66,6 @@ public class RoadrunnerTest extends LinearOpMode {
 
         if (isStopRequested()) return;
 
-        drive.followTrajectory(TEST1);
-        drive.followTrajectory(TEST2);
-        drive.followTrajectory(TEST3);
+        drive.followTrajectorySequence(TEST1);
     }
 }
