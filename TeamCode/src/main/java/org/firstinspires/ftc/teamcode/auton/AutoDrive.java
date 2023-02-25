@@ -93,7 +93,7 @@ public class AutoDrive {
             rightBackDrive.setPower(0);
         }
 
-        else if (direction == BACKWARD) {
+        if (direction == BACKWARD) {
             leftFrontDrive.setPower(power * -1);
             leftBackDrive.setPower(power * -1);
             rightFrontDrive.setPower(power * -1);
@@ -105,7 +105,7 @@ public class AutoDrive {
             rightBackDrive.setPower(0);
         }
 
-        else if (direction == STRAFELEFT) {
+        if (direction == STRAFELEFT) {
             leftFrontDrive.setPower(power * -1);
             leftBackDrive.setPower(power * 1);
             rightFrontDrive.setPower(power * 1);
@@ -117,7 +117,7 @@ public class AutoDrive {
             rightBackDrive.setPower(0);
         }
 
-        else if (direction == STRAFERIGHT) {
+        if (direction == STRAFERIGHT) {
 
             leftFrontDrive.setPower(power * 1);
             leftBackDrive.setPower(power * -1);
@@ -129,7 +129,7 @@ public class AutoDrive {
             rightFrontDrive.setPower(0);
             rightBackDrive.setPower(0);
         }
-        else if (direction == RIGHTTURN) {
+        if (direction == RIGHTTURN) {
             leftFrontDrive.setPower(power * 1);
             leftBackDrive.setPower(power * 1);
             rightFrontDrive.setPower(power * -1);
@@ -140,7 +140,7 @@ public class AutoDrive {
             rightFrontDrive.setPower(0);
             rightBackDrive.setPower(0);
         }
-        else if (direction == LEFTTURN)   {
+        if (direction == LEFTTURN)   {
             leftFrontDrive.setPower(power * -1);
             leftBackDrive.setPower(power * -1);
             rightFrontDrive.setPower(power * 1);
@@ -152,45 +152,44 @@ public class AutoDrive {
             rightBackDrive.setPower(0);
         }
 
-        else if (direction == ARMUP2)   {
+        if (direction == ARMUP2)   {
             lift.setTargetPosition(685);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             lift.setPower(0.13);
 
         }
-        else if (direction == ARMUP3)   {
+        if (direction == ARMUP3)   {
             lift.setTargetPosition(900);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             lift.setPower(0.13);
 
         }
-        else if (direction == ARMDOWN)   {
+        if (direction == ARMDOWN)   {
             lift.setTargetPosition(0);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             lift.setPower(0.13);
 
         }
-        else if (direction ==CLAWCLOSE) {
+        if (direction ==CLAWCLOSE) {
             Claw.setPosition(0.6);
 
         }
 
-        else if (direction ==CLAWOPEN) {
+        if (direction ==CLAWOPEN) {
             Claw.setPosition(0.0);
-
         }
-        else if (direction == GROUND)   {
+        if (direction == GROUND)   {
             lift.setTargetPosition(100);
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             lift.setPower(0.13);
 
         }
-        else if (direction ==Turretright)  {
-            turret.setTargetPosition(2250);
+        if (direction ==Turretright)  {
+            turret.setTargetPosition(1105);
             turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             turret.setPower(1);
         }
-        else if (direction ==Turretreset) {
+        if (direction ==Turretreset) {
             turret.setTargetPosition(0);
             turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             turret.setPower(1);
