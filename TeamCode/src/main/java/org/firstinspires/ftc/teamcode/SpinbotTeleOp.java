@@ -151,6 +151,7 @@ public class SpinbotTeleOp extends OpMode {
             rightFrontPower = -0.16;
             rightBackPower = -0.16;
         }
+
         if(gamepad1.y){
             Claw.setPosition(0.35);
             lift.setTargetPosition(880);
@@ -161,6 +162,7 @@ public class SpinbotTeleOp extends OpMode {
             rightFrontPower = -0.16;
             rightBackPower = -0.16;
         }
+
         if(gamepad1.x){
             Claw.setPosition(0.35);
             lift.setTargetPosition(400);
