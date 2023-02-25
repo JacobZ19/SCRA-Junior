@@ -46,12 +46,20 @@ public class AutoDrive {
     DcMotor leftFrontDrive;
     DcMotor leftBackDrive;
 
-    public void initHardwareMap()
-    {
+    public void initDrive() {
         leftFrontDrive = opMode.hardwareMap.get(DcMotor.class, "left_front");
         rightFrontDrive = opMode.hardwareMap.get(DcMotor.class, "right_front");
         leftBackDrive = opMode.hardwareMap.get(DcMotor.class, "left_back");
         rightBackDrive = opMode.hardwareMap.get(DcMotor.class, "right_back");
+
+        leftFrontDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightFrontDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+        leftBackDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightBackDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+    }
+
+    public void initHardwareMap()
+    {
         lift = opMode.hardwareMap.get(DcMotor.class,"Lift");
         turret = opMode.hardwareMap.get(DcMotor.class,"turret");
         Claw = opMode.hardwareMap.get(Servo.class, "Claw");
@@ -64,10 +72,6 @@ public class AutoDrive {
         turret.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
 
-        leftFrontDrive.setDirection(DcMotorSimple.Direction.REVERSE);
-        rightFrontDrive.setDirection(DcMotorSimple.Direction.FORWARD);
-        leftBackDrive.setDirection(DcMotorSimple.Direction.REVERSE);
-        rightBackDrive.setDirection(DcMotorSimple.Direction.FORWARD);
         lift.setDirection(DcMotorSimple.Direction.REVERSE);
         turret.setDirection(DcMotorSimple.Direction.FORWARD);
 //hi

@@ -101,6 +101,7 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         lift.setDirection(DcMotorSimple.Direction.REVERSE);
         robot.initHardwareMap();
+        robot.initDrive();
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
         aprilTagDetectionPipeline = new AprilTagDetectionPipeline(tagsize, fx, fy, cx, cy);

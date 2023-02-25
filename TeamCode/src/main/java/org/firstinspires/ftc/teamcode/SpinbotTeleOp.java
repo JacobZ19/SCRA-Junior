@@ -173,7 +173,7 @@ public class SpinbotTeleOp extends OpMode {
             rightBackPower = -0.16;
         }
 
-        if(gamepad2.left_stick_button && liftpos >= 150 && turretpos >= -2000){
+        if(gamepad2.left_stick_button && liftpos >= 150 && turretpos >= -4000){
 
             turretpos = turret.getCurrentPosition();
             turretpos -= 100;
@@ -182,7 +182,7 @@ public class SpinbotTeleOp extends OpMode {
             turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
 
-        else if(gamepad2.right_stick_button && liftpos >= 150 && turretpos <= 2000){
+        else if(gamepad2.right_stick_button && liftpos >= 150 && turretpos <= 4000){
             turretpos = turret.getCurrentPosition();
             turretpos += 100;
             turret.setTargetPosition((int) turretpos);
