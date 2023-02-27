@@ -1,41 +1,26 @@
 package org.firstinspires.ftc.teamcode.auton;
 
-import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
-import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.geometry.Vector2d;
-import com.acmerobotics.roadrunner.trajectory.Trajectory;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Servo;
-
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.drive.DriveConstants;
-import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
-import org.firstinspires.ftc.teamcode.auton.AutoDrive;
-import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
-
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.SimpleDrive;
+import org.firstinspires.ftc.teamcode.drive.DriveConstants;
+import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
-import org.openftc.easyopencv.OpenCvInternalCamera;
-import org.firstinspires.ftc.teamcode.auton.AutoDrive;
+
 import java.util.ArrayList;
 
 @Config
-@Autonomous(name = "ROADRUNNER TEST")
-public class RoadrunnerTest extends LinearOpMode {
+@Autonomous(name = "Left Medium-Junction with AutoPark")
+public class LeftMediumJunctionwithAutoPark extends LinearOpMode {
     private DcMotor lift = null;
     AutoDrive robot = new AutoDrive(this);
 
@@ -85,61 +70,67 @@ public class RoadrunnerTest extends LinearOpMode {
 
         telemetry.setMsTransmissionInterval(50);
 
-        lift = hardwareMap.get(DcMotor.class,"Lift");
-        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        lift.setDirection(DcMotorSimple.Direction.REVERSE);
+//        lift = hardwareMap.get(DcMotor.class,"Lift");
+//        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+//        lift.setDirection(DcMotorSimple.Direction.REVERSE);
 
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
-        robot.initHardwareMap();
-        robot.initDrive();
+        Pose2d StartPose = new Pose2d(0,0, Math.toRadians(0));
+        drive.setPoseEstimate(StartPose);
 
-        TrajectorySequence Coning = drive.trajectorySequenceBuilder(new Pose2d())
+        TrajectorySequence Coning = drive.trajectorySequenceBuilder(StartPose)
                 .addTemporalMarker(() -> {
-                        robot.drive(0, 0, robot.CLAWCLOSE);
+                    robot.claw(robot.CLAWCLOSE);
                 })
-                .forward(58,
+                .forward(50,
                         SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL / 2, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL / 2)
                 )
-                .addTemporalMarker(() -> {
-                        robot.drive(0, 0, robot.ARMUP3);
-                })
-                .waitSeconds(5)
-                .addTemporalMarker(() -> {
-                        robot.drive(0, 0, robot.Turretright);
-                })
-                .waitSeconds(4)
-                .addTemporalMarker(() -> {
-                        robot.drive(0, 0, robot.CLAWOPEN);
-                })
-                .waitSeconds(1)
-                .addTemporalMarker(() -> {
-                        robot.drive(0,0, robot.Turretreset);
-                })
-                .back(9)
-                .waitSeconds(4)
-                .addTemporalMarker(() -> {
-                        robot.drive(0, 0, robot.ARMDOWN);
-                })
-                .waitSeconds(5)
-                .lineToLinearHeading(new Pose2d(49, 0, Math.toRadians(90)),
+                .back(23,
                         SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL / 2, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL / 2))
+                .addTemporalMarker(() -> {
+                    robot.lift(robot.ARMUP2);
+                })
+                .waitSeconds(4)
+                .addTemporalMarker(() -> {
+                    robot.turret(robot.TurretrightMedium);
+                })
+                .waitSeconds(3)
+                .addTemporalMarker(() -> {
+                    robot.claw(robot.CLAWOPEN);
+                })
+                .waitSeconds(0.5)
+                .addTemporalMarker(() -> {
+                    robot.turret(robot.Turretreset);
+                })
+                .waitSeconds(3)
+//                .back(8)
+////                .lineToConstantHeading(new Vector2d(49, 0),
+////                        SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL / 2, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+////                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL / 2))
+                .addTemporalMarker(() -> {
+                    robot.lift(robot.ARMDOWN);
+                })
+                .waitSeconds(4)
+                .forward(24)
+                .turn(Math.toRadians(90))
                 .build();
 
-        Trajectory Left = drive.trajectoryBuilder(Coning.end())
+        TrajectorySequence Left = drive.trajectorySequenceBuilder(Coning.end())
                 .forward(23,
                         SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL / 2, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL / 2))
                 .build();
 
-        Trajectory Right = drive.trajectoryBuilder(Coning.end())
+        TrajectorySequence Right = drive.trajectorySequenceBuilder(Coning.end())
                 .back(24,
                         SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL / 2, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL / 2))
                 .build();
+
 
         while (!isStarted() && !isStopRequested())
         {
@@ -196,7 +187,7 @@ public class RoadrunnerTest extends LinearOpMode {
             }
 
             telemetry.update();
-            sleep(20);
+
         }
 
         if(tagOfInterest != null)
@@ -211,26 +202,29 @@ public class RoadrunnerTest extends LinearOpMode {
             telemetry.update();
         }
 
-
+        telemetry.addLine("Start happened");
+        telemetry.update();
 
         if(tagOfInterest == null || tagOfInterest.id == LEFT){
             drive.followTrajectorySequence(Coning);
-            drive.followTrajectory(Left);
+            drive.followTrajectorySequence(Left);
         }
         else if(tagOfInterest.id == MIDDLE) {
+            telemetry.addLine("Before the movement");
+            telemetry.update();
             drive.followTrajectorySequence(Coning);
-            sleep(10);
+            telemetry.addLine("After the movement");
+            telemetry.update();
         }
 
         else if(tagOfInterest.id == RIGHT){
             drive.followTrajectorySequence(Coning);
-            drive.followTrajectory(Right);
+            drive.followTrajectorySequence(Right);
         }
 
         else{
-            sleep(600000);
         }
-        while (opModeIsActive()) {sleep(20);}
+        while (opModeIsActive()) {;}
     }
 
     void tagToTelemetry(AprilTagDetection detection)
