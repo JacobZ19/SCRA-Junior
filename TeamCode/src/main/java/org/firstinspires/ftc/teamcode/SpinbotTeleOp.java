@@ -95,7 +95,6 @@ public class SpinbotTeleOp extends OpMode {
         telemetry.clearAll();
         Endgametrue = false;
         Parktrue = false;
-        Claw.setPosition(0.6);
         runtime.reset();
     }
 

@@ -67,9 +67,9 @@ import java.util.ArrayList;
 // This is partially 22092 cyber eagles jade work
 // You may only use this code over cyber eagles jade consent and FTC consent
 
-@Autonomous(name="Thy THICCUST Autonomous")
+@Autonomous(name="AutoPark with Cone")
 
-public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
+public class AutoParkwithCone extends LinearOpMode
 {
     OpenCvCamera camera;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
@@ -194,7 +194,7 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
         if(tagOfInterest == null || tagOfInterest.id == LEFT){
             tag_number = 1;
             robot.drive(40, 0.5, robot.FORWARD);
-            robot.drive(1800, 0.5, robot.CLAWCLOSE);
+            robot.claw(robot.CLAWCLOSE);
             sleep(500);
             robot.drive(1300, 0.5, robot.STRAFELEFT);
             sleep(1000);
@@ -206,7 +206,7 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
         else if(tagOfInterest.id == MIDDLE) {
             tag_number = 2;
             robot.drive(40, 0.5, robot.FORWARD);
-            robot.drive(1300, 0.5, robot.CLAWCLOSE);
+            robot.claw(robot.CLAWCLOSE);
             sleep(500);
             robot.drive(200, 0.5, robot.STRAFELEFT);
             robot.drive(400, 0.75, robot.FORWARD);
@@ -219,7 +219,7 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
         else if(tagOfInterest.id == RIGHT){
             tag_number = 3;
             robot.drive(40, 0.5, robot.FORWARD);
-            robot.drive(1300, 0.5, robot.CLAWCLOSE);
+            robot.claw(robot.CLAWCLOSE);
             sleep(500);
             robot.drive(800, 0.5, robot.STRAFERIGHT);
             sleep(1000);
