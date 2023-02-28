@@ -1,49 +1,33 @@
-/*
- * Copyright (c) 2021 OpenFTC Team
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
-
 package org.firstinspires.ftc.teamcode.auton;
 
+import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.drive.DriveConstants;
+import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
+
 import java.util.ArrayList;
 
-@Disabled
-@Autonomous(name="Auto Test LEFT")
+@Config
+@Autonomous(name = "Right Medium-Junction with AutoPark")
+public class RightMediumJunctionwithAutoPark extends LinearOpMode {
+    private DcMotor lift = null;
+    AutoDrive robot = new AutoDrive(this);
 
-public class autotestleft extends LinearOpMode
-{
     OpenCvCamera camera;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
 
     static final double FEET_PER_METER = 3.28084;
-    private DcMotor lift = null;
     public float liftpos;
     double fx = 578.272;
     double fy = 578.272;
@@ -58,17 +42,15 @@ public class autotestleft extends LinearOpMode
 
 
     AprilTagDetection tagOfInterest = null;
-    AutoDrive robot = new AutoDrive(this);
-
 
     @Override
-    public void runOpMode()
-    {
+    public void runOpMode() {
         lift = hardwareMap.get(DcMotor.class,"Lift");
         lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         lift.setDirection(DcMotorSimple.Direction.REVERSE);
         robot.initHardwareMap();
+        robot.initDrive();
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
         aprilTagDetectionPipeline = new AprilTagDetectionPipeline(tagsize, fx, fy, cx, cy);
@@ -87,6 +69,71 @@ public class autotestleft extends LinearOpMode
         });
 
         telemetry.setMsTransmissionInterval(50);
+
+//        lift = hardwareMap.get(DcMotor.class,"Lift");
+//        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+//        lift.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+
+        Pose2d StartPose = new Pose2d(0,0, Math.toRadians(0));
+        drive.setPoseEstimate(StartPose);
+
+        TrajectorySequence Coning = drive.trajectorySequenceBuilder(StartPose)
+                .addTemporalMarker(() -> {
+                    robot.claw(robot.CLAWCLOSE);
+                })
+                .strafeLeft(2,
+                        SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL / 2, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL / 2))
+                .forward(50,
+                        SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL / 2, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL / 2)
+                )
+                .back(23,
+                        SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL / 2, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL / 2))
+                .addTemporalMarker(() -> {
+                    robot.lift(robot.ARMUP2);
+                })
+                .waitSeconds(4)
+                .addTemporalMarker(() -> {
+                    robot.turret(robot.TurretleftMedium);
+                })
+                .waitSeconds(3)
+                .addTemporalMarker(() -> {
+                    robot.claw(robot.CLAWOPEN);
+                })
+                .waitSeconds(0.5)
+                .addTemporalMarker(() -> {
+                    robot.turret(robot.Turretreset);
+                })
+                .waitSeconds(3)
+//                .back(8)
+////                .lineToConstantHeading(new Vector2d(49, 0),
+////                        SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL / 2, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+////                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL / 2))
+                .addTemporalMarker(() -> {
+                    robot.lift(robot.ARMDOWN);
+                })
+                .waitSeconds(4)
+                .forward(24)
+                .turn(Math.toRadians(-90))
+                .build();
+
+        TrajectorySequence Left = drive.trajectorySequenceBuilder(Coning.end())
+                .back(23,
+                        SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL / 2, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL / 2))
+                .build();
+
+        TrajectorySequence Right = drive.trajectorySequenceBuilder(Coning.end())
+                .forward(24,
+                        SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL / 2, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL / 2))
+                .build();
+
 
         while (!isStarted() && !isStopRequested())
         {
@@ -108,7 +155,7 @@ public class autotestleft extends LinearOpMode
 
                 if(tagFound)
                 {
-                    telemetry.addLine("Tag of interest is in sight!\n\nLocation data:");
+                    telemetry.addLine("My eyes work\n\nLocation data:");
                     tagToTelemetry(tagOfInterest);
                 }
                 else
@@ -128,22 +175,22 @@ public class autotestleft extends LinearOpMode
             }
             else
             {
-                telemetry.addLine("Don't see tag of interest :(");
+                telemetry.addLine("Cant see it");
 
                 if(tagOfInterest == null)
                 {
-                    telemetry.addLine("(The tag has never been seen)");
+                    telemetry.addLine("Neva seeeeeen");
                 }
                 else
                 {
-                    telemetry.addLine("\nBut we HAVE seen the tag before; last seen at:");
+                    telemetry.addLine("\nTag Seen Before");
                     tagToTelemetry(tagOfInterest);
                 }
 
             }
 
             telemetry.update();
-            sleep(20);
+
         }
 
         if(tagOfInterest != null)
@@ -154,52 +201,33 @@ public class autotestleft extends LinearOpMode
         }
         else
         {
-            telemetry.addLine("No tag snapshot available, it was never sighted during the init loop :(");
+            telemetry.addLine("ERROR IN SEEING");
             telemetry.update();
         }
 
-        robot.drive(5, 0.233333f, robot.CLAWCLOSE);
-        sleep(200);
-        robot.drive(5,0.11111f, robot.ARMUP2);
-        sleep(2000);
-        robot.drive(2000, 0.25, robot.FORWARD);
-        sleep(2000);
-        robot.drive(690, 0.25, robot.RIGHTTURN);
-        sleep(1000);
-        sleep(1000);
-        robot.drive(5, 0.333333f, robot.CLAWOPEN);
-        sleep(500);
-        robot.drive(400, 0.25, robot.BACKWARD);
-        sleep(1000);
-        robot.drive(690, 0.25, robot.LEFTTURN);
-        robot.drive(1700, 0.25, robot.BACKWARD);
-        robot.drive(5, 0.111111f, robot.ARMDOWN);
-        sleep(4000);
+        telemetry.addLine("Start happened");
+        telemetry.update();
 
-//hi
         if(tagOfInterest == null || tagOfInterest.id == LEFT){
-            tag_number = 1;
-            robot.drive(3000, 0.25, robot.STRAFELEFT);
-            robot.drive(2000, 0.25, robot.FORWARD);
-
+            drive.followTrajectorySequence(Coning);
+            drive.followTrajectorySequence(Left);
         }
         else if(tagOfInterest.id == MIDDLE) {
-            tag_number = 2;
-            robot.drive(100, 0.25, robot.STRAFELEFT);
-            robot.drive(1100, 0.5, robot.FORWARD);
-
+            telemetry.addLine("Before the movement");
+            telemetry.update();
+            drive.followTrajectorySequence(Coning);
+            telemetry.addLine("After the movement");
+            telemetry.update();
         }
 
         else if(tagOfInterest.id == RIGHT){
-            tag_number = 3;
-            robot.drive(2200, 0.25, robot.STRAFERIGHT);
-            robot.drive(2000, 0.25, robot.FORWARD);
+            drive.followTrajectorySequence(Coning);
+            drive.followTrajectorySequence(Right);
         }
 
         else{
-            sleep(600000);
         }
-        while (opModeIsActive()) {sleep(20);}
+        while (opModeIsActive()) {;}
     }
 
     void tagToTelemetry(AprilTagDetection detection)

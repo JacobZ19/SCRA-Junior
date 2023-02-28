@@ -42,6 +42,8 @@ public class AutoDrive {
     public final int TurretrightHigh = 13;
     public final int Turretreset = 14;
     public final int TurretrightMedium = 15;
+    public final int TurretleftHigh = 16;
+    public final int TurretleftMedium = 17;
     DcMotor lift = null;
     DcMotor turret = null;
     public Servo Claw;
@@ -125,6 +127,16 @@ public class AutoDrive {
         }
         if (direction ==TurretrightMedium) {
             turret.setTargetPosition(946);
+            turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            turret.setPower(1);
+        }
+        if (direction ==TurretleftHigh)  {
+            turret.setTargetPosition(-1500);
+            turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            turret.setPower(1);
+        }
+        if (direction ==TurretleftMedium) {
+            turret.setTargetPosition(-946);
             turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             turret.setPower(1);
         }
