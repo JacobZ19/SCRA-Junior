@@ -84,7 +84,7 @@ public class RightHighJunctionwithAutoPark extends LinearOpMode {
                 .addTemporalMarker(() -> {
                     robot.claw(robot.CLAWCLOSE);
                 })
-                .forward(60,
+                .forward(59,
                         SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL / 2, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL / 2)
                 )
@@ -104,7 +104,7 @@ public class RightHighJunctionwithAutoPark extends LinearOpMode {
                     robot.turret(robot.Turretreset);
                 })
                 .waitSeconds(3)
-                .back(10)
+                .back(9)
 //                .lineToConstantHeading(new Vector2d(49, 0),
 //                        SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL / 2, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
 //                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL / 2))
